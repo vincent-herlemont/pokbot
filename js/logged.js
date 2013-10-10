@@ -10,7 +10,7 @@ var XHR = function(method, ad, params) {
 		}
 	xhr.send( str );
 }
-
+console.log("test");
 function init() {
 	// Connect to the SocketIO server to retrieve ongoing games.
 	socket = io.connect();

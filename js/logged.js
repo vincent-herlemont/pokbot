@@ -11,11 +11,41 @@ var XHR = function(method, ad, params) {
 	xhr.send( str );
 }
 
+function createRobots(robotElements){
+    $.each(robotElements,function(idRobot,robot){
+        console.log(robot);
+        $("#board tr:eq("+robot.line+") td:eq("+robot.column+")").addClass("robot"+robot.color);
+            
+    });
+}
+
+function createTarget(targetElement){
+    $("#board tr:eq("+targetElement.l+") td:eq("+targetElement.c+")").addClass("cible"+targetElement.t);
+
+}
+
+function createBoard(boardElements){
+    var _DOMBoard = $("#board");
+    $.each(boardElements,function(idLigne,ligne){
+        var _DOMLigne = $("<tr></tr>");
+        $(_DOMBoard).append(_DOMLigne);
+        $.each(ligne,function(idLigne,cell){
+            var _DOMCase = $("<td></td>");
+            $.each(cell, function(NameClass, value) {
+                $(_DOMCase).addClass(NameClass);
+            });
+            $(_DOMLigne).append(_DOMCase);
+        });
+    });
+}
+
 function displayGrid(){
-   XHR('GET', '/patate', {onload: function() {
-       var grille = $.parseJson(this.responseText);
-       console.log(grille); 
-       ; } } );
+    $.getJSON( "/"+document.getElementById('idGame').value, function( grille ) {
+         console.log(grille.robots);
+         createBoard(grille.board);
+         createTarget(grille.target);
+         createRobots(grille.robots);
+    });
 }
 
 console.log("test");
@@ -46,4 +76,6 @@ function init() {
 	socket.emit ('identification', 	{ login	: document.getElementById('login').value
 									, idGame: document.getElementById('idGame').value}
 				);
+				
+	displayGrid();
 }

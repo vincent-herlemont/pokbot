@@ -6,9 +6,11 @@
 	<head>
 		<title>Rasende Roboter</title>
 		<script src="/socket.io/socket.io.js"></script>
-		<script src="js/logged.js"></script>
 		<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/Cookies.js/0.3.1/cookies.min.js"></script>
+		<script src="js/logged.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+
 	</head>
 	<body onload="init()">
 		<header>
@@ -22,7 +24,9 @@
 				<ul id="lesParticipants" />
 			</nav>
 			<section id="partie">
-				
+				<table id="board">
+				    
+				</table>
 			</section>
 		</section>
 		<footer>

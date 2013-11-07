@@ -1,0 +1,41 @@
+            td{
+                width:20px;
+                height:20px;
+                
+            }
+		    .g{
+		        border-left:1px solid black;
+		    }
+		    .b{
+		        border-bottom:1px solid black;
+		    }
+		    .h{
+		        border-top:1px solid black;
+		    }
+		    .d{
+		        border-right:1px solid black;
+		    }
+.ciblegreen{
+    background: url('../images/greenTarget.jpg');
+}
+.ciblered{
+    background: red;
+}
+.cibleyellow{
+    background: yellow;
+}
+.cibleblue{
+    background: blue;
+}
+.robotblue{
+    background: blue;
+}
+.robotgreen{
+    background: green;
+}
+.robotred{
+    background: red;
+}
+.robotyellow{
+    background: yellow;
+}

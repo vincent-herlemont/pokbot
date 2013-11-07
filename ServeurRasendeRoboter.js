@@ -340,7 +340,6 @@ var RRServer = {
 											    var tablet = false;
 											    if(RRServer.games.list[req.body.idGame].participants[req.body.login].sockets.length>0)
 											        tablet = true;
-											    //console.log(RRServer.games.list[req.body.idGame].participants[req.body.login].sockets.length);
 												if (err) {res.writeHead(500);
 														  return res.end('Error loading logged.xhtml');}
 												res.writeHead(200, {'Content-Type': 'application/xhtml+xml; charset=utf-8'});
@@ -349,7 +348,8 @@ var RRServer = {
 												if(RRServer.games.list[req.body.idGame].Terminated) {state += ' est terminée';}
 												res.write( data.toString().replace(/__LOGIN__/g	, req.body.login)
 																		  .replace(/__IDGAME__/g, title)
-																		  .replace(/__STATE__/g, tablet)
+																		  .replace(/__STATE__/g, state)
+																		  .replace(/__TABLET__/g, tablet)
 														 );
 	 
 														
@@ -405,7 +405,6 @@ var RRServer = {
 																								   , JSON.parse( req.body.proposition ) );
 														}
 													res.writeHead(200, {'Content-Type': 'application/json'});
-													// console.log( 'coucou' );
 													// console.log( "Send answer : " + JSON.stringify( answer ));
 													res.end( JSON.stringify( answer ) );
 												 break;

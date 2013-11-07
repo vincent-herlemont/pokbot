@@ -201,6 +201,8 @@ var RRServer = {
 								 if(this.list[idGame].participants[playerName] == undefined) {
 									 //console.log("\tParticipant " + playerName + ' is joining game ' + idGame);
 									 this.list[idGame].participants[playerName] = {name:playerName, sockets: new Array()};
+									}else{
+									   // console.log(this.list[idGame].participants[playerName].sockets);
 									}
 								}
 				  , leaving	: function(idGame, playerName) {
@@ -215,7 +217,7 @@ var RRServer = {
 								 if(this.list[idGame] == undefined) {return;}
 								 var nb=0; 
 								 for(i in this.list[idGame].participants) {
-									 //console.log("\t\tConsidering participant " + i + ' with ' + this.list[idGame].participants[i].sockets.length + ' sockets');
+									 console.log("\t\tConsidering participant " + i + ' with ' + this.list[idGame].participants[i].sockets.length + ' sockets');
 									 if(this.list[idGame].participants[i].sockets.length > 0) {nb++;}
 									}
 								 if(nb==0) {this.close(idGame);}
@@ -225,7 +227,7 @@ var RRServer = {
 								 if(this.list[idGame].participants[playerName] == undefined) {
 									 this.joining(idGame, playerName);
 									}
-								 //console.log("\tParticipant " + playerName + " is connected on game " + idGame + " using socket " + socket.id);
+								 console.log("\tParticipant " + playerName + " is connected on game " + idGame + " using socket " + socket.id);
 								 this.list[idGame].participants[playerName].sockets.push(socket);
 								 this.sendListOfParticipants(idGame);
 								}
@@ -335,6 +337,10 @@ var RRServer = {
 														 }
 										RRServer.fs.readFile(__dirname + '/logged.xhtml',
 											function (err, data) {
+											    var tablet = false;
+											    if(RRServer.games.list[req.body.idGame].participants[req.body.login].sockets.length>0)
+											        tablet = true;
+											    //console.log(RRServer.games.list[req.body.idGame].participants[req.body.login].sockets.length);
 												if (err) {res.writeHead(500);
 														  return res.end('Error loading logged.xhtml');}
 												res.writeHead(200, {'Content-Type': 'application/xhtml+xml; charset=utf-8'});
@@ -343,8 +349,10 @@ var RRServer = {
 												if(RRServer.games.list[req.body.idGame].Terminated) {state += ' est terminée';}
 												res.write( data.toString().replace(/__LOGIN__/g	, req.body.login)
 																		  .replace(/__IDGAME__/g, title)
-																		  .replace(/__STATE__/g, state)
+																		  .replace(/__STATE__/g, tablet)
 														 );
+	 
+														
 												res.end();
 											  });
 											

@@ -38,4 +38,3 @@ function init() {
 									, idGame: document.getElementById('idGame').value}
 				);
 }
-

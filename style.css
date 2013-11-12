@@ -14,7 +14,13 @@
 		    }
 		    .d{
 		        border-right:1px solid black;
+		       
 		    }
+
+#partie {
+}
+#partieRaphael{
+}
 .ciblegreen{
     background: url('../images/greenTarget.jpg');
 }

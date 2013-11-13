@@ -14,12 +14,13 @@ var XHR = function(method, ad, params) {
 function oRBoard(width,height){
     var _this = this;
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
-    //DoubleTab : [ligne][colum]
-    this.stCell = [];
-    //matrice*DoubleTab : [ligne][colum]{"g,b,h,d"}
-    this.stWall = [];
+    //matrice*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
+    this.st = [];
+    
     //ObjetPaper
-    this.SetstWall = paper.set();
+    this.paperSt = {}
+    this.paperSt.cells = paper.set();
+    this.paperSt.walls = paper.set();
     
     this.cellSize = {};
     this.traceWall = function(pathPaper){
@@ -31,69 +32,90 @@ function oRBoard(width,height){
     this.createBoard = function(boardElements){
         console.log(boardElements);
         _this.cellSize.width = (width/boardElements.length);
-        var idLineInCourt = 0;
+        var _idLineEnCour = 0;
+        var _idCellEnCour = 0;
         var i_SetstWall = 0;
         $.each(boardElements,function(idLigne,ligne){
             _this.cellSize.height = (width/ligne.length);
-            idLineInCourt = idLigne;
-            _this.stCell[idLigne] = [];
-            _this.stWall[idLigne] = [];
+            _idLineEnCour = idLigne;
+            _this.st[idLigne] = [];
             $.each(ligne,function(idCell,cell){
                 var i = 0
                 var u = (i/ligne.length);
-                _this.stCell[idLigne][idCell] = paper.rect(  
+                
+                _this.paperSt.cells.push(paper.rect(  
                 ((_this.cellSize.width))*idCell,
-                ((_this.cellSize.width))*idLineInCourt,
+                ((_this.cellSize.width))*_idLineEnCour,
                 (_this.cellSize.width-i),
-                (_this.cellSize.width-i));
-                _this.stWall[idLigne][idCell] = {};
+                (_this.cellSize.width-i)));
+                
+                _this.st[idLigne][idCell] = {};
+                _this.st[idLigne][idCell].cell = _this.paperSt.cells[_idCellEnCour];
+                _this.paperSt.cells[_idCellEnCour].pokBot = {};
+                _this.paperSt.cells[_idCellEnCour].pokBot.x = idCell;
+                _this.paperSt.cells[_idCellEnCour].pokBot.y = idLigne;
+                _idCellEnCour++;
                 $.each(cell, function(NameClass, value) {
-                    var x = _this.stCell[idLigne][idCell].attr("x");
-                    var y = _this.stCell[idLigne][idCell].attr("y");
-                    var width = _this.stCell[idLigne][idCell].attr("width");
-                    var height = _this.stCell[idLigne][idCell].attr("height");
+                    var x = _this.st[idLigne][idCell].cell.attr("x");
+                    var y = _this.st[idLigne][idCell].cell.attr("y");
+                    var width = _this.st[idLigne][idCell].cell.attr("width");
+                    var height = _this.st[idLigne][idCell].cell.attr("height");
                     var pathPaper = "";
                     if(value==1){
                         if(NameClass=="g"){
                             pathPaper = "M"+(x+1)+" "+(y-i)+"L"+(x+1)+" "+(y+height+i)+"";
-                            _this.SetstWall.push(_this.traceWall(pathPaper));
-                            _this.stWall[idLigne][idCell].g = _this.SetstWall[i_SetstWall];
+                            _this.paperSt.walls.push(_this.traceWall(pathPaper));
+                            _this.st[idLigne][idCell].g = _this.paperSt.walls[i_SetstWall];
                             i_SetstWall++;
                         }else if(NameClass=="b"){
                             pathPaper = "M"+(x-i)+" "+(y+height-1)+"L"+(x+width+i)+" "+(y+height-1)+"";
-                            _this.SetstWall.push(_this.traceWall(pathPaper));
-                            _this.stWall[idLigne][idCell].b = _this.SetstWall[i_SetstWall];
+                            _this.paperSt.walls.push(_this.traceWall(pathPaper));
+                            _this.st[idLigne][idCell].b = _this.paperSt.walls[i_SetstWall];
                             i_SetstWall++;
                         }else if(NameClass=="h"){
                             pathPaper = "M"+(x-i)+" "+(y+1)+"L"+(x+width+i)+" "+(y+1)+"";
-                            _this.SetstWall.push(_this.traceWall(pathPaper));
-                            _this.stWall[idLigne][idCell].h = _this.SetstWall[i_SetstWall];
+                            _this.paperSt.walls.push(_this.traceWall(pathPaper));
+                            _this.st[idLigne][idCell].h = _this.paperSt.walls[i_SetstWall];
                             i_SetstWall++;
                         }else if(NameClass=="d"){
                             pathPaper = "M"+(x+width-1)+" "+(y-i)+"L"+(x+width-1)+" "+(y+height+i)+"";
-                            _this.SetstWall.push(_this.traceWall(pathPaper));
-                            _this.stWall[idLigne][idCell].d = _this.SetstWall[i_SetstWall];
+                            _this.paperSt.walls.push(_this.traceWall(pathPaper));
+                            _this.st[idLigne][idCell].d = _this.paperSt.walls[i_SetstWall];
                             i_SetstWall++;
                         }
-                        
-                    }
-                });
-                _this.stCell[idLigne][idCell].attr({"fill":"#fff","stroke":"#ddd"});
-                _this.stCell[idLigne][idCell].click(function(event){
-                    this.attr({"stroke":(this.attr("stroke")!="#f00")?"#f00":"green"});
-                    this.toFront();
-                    _this.SetstWall.toFront();
-                });
-                _this.stCell[idLigne][idCell].mouseout(function(event){
-                    this.attr({"fill":"#fff"});
-                });
-                _this.stCell[idLigne][idCell].mouseover(function(event){
-                    this.attr({"fill":"#0FF"});
+                         
+                    }  
                 });
             });
         });
-        _this.SetstWall.toFront();
+        _this.paperSt.walls.toFront();
+        _this.paperSt.cells.toBack();
+        _this.paperSt.cells.attr({"fill":"#fff","stroke":"#ddd"});
+        _this.paperSt.cells.mouseout(function(event){
+                    this.attr({"fill":"#fff"});
+                    //console.log(this.pokBot);
+                    _this.createCross(this,"#FFF");
+                });
+        _this.paperSt.cells.mouseover(function(event){
+                    this.attr({"fill":"#0FF"});
+                    _this.createCross(this,"#FdF");
+                });
+        _this.paperSt.cells.click(function(event){
+            this.attr({"stroke":(this.attr("stroke")!="#f00")?"#f00":"green"});
+            this.toFront();
+            _this.paperSt.walls.toFront();
+
+        });
     };
+    
+    this.createCross = function(stElement,color){
+        for(var y=0;y<_this.st.length;y++){
+            _this.st[y][stElement.pokBot.x].cell.attr({"fill":color});
+        }
+        for(var x=0;x<_this.st.length;x++){
+            _this.st[stElement.pokBot.y][x].cell.attr({"fill":color});
+        }
+    }
     
     $.getJSON( "/"+document.getElementById('idGame').value, function( grille ) {
         _this.createBoard(grille.board);

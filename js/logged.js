@@ -92,18 +92,18 @@ function oRBoard(width,height){
         _this.paperSt.cells.toBack();
         _this.paperSt.cells.attr({"fill":"#fff","stroke":"#ddd"});
         _this.paperSt.cells.mouseout(function(event){
-                    this.attr({"fill":"#fff"});
-                    //console.log(this.pokBot);
                     _this.createCross(this,"#FFF");
                 });
         _this.paperSt.cells.mouseover(function(event){
-                    this.attr({"fill":"#0FF"});
-                    _this.createCross(this,"#FdF");
+                    _this.createCross(this,"#FFD");
+                    _this.createMoveCross(this,"#FDF");
                 });
         _this.paperSt.cells.click(function(event){
             this.attr({"stroke":(this.attr("stroke")!="#f00")?"#f00":"green"});
             this.toFront();
             _this.paperSt.walls.toFront();
+            console.log(this.pokBot);
+            console.log(_this.st[this.pokBot.y][this.pokBot.x]);
 
         });
     };
@@ -114,6 +114,52 @@ function oRBoard(width,height){
         }
         for(var x=0;x<_this.st.length;x++){
             _this.st[stElement.pokBot.y][x].cell.attr({"fill":color});
+        }
+    }
+    this.createMoveCross = function(stElement,color){
+        
+        //Y
+        for(var yb=stElement.pokBot.y+1;yb<_this.st.length;yb++){
+            if(_this.st[yb][stElement.pokBot.x]["h"]!=undefined){
+                break;
+            }else{
+               _this.st[yb][stElement.pokBot.x].cell.attr({"fill":color});
+            }
+            if(_this.st[yb][stElement.pokBot.x]["b"]!=undefined){
+                break;
+            }
+        }
+        for(var yh=stElement.pokBot.y-1;yh>=0;yh--){
+            if(_this.st[yh][stElement.pokBot.x]["b"]!=undefined){
+                break;
+            }else{
+               _this.st[yh][stElement.pokBot.x].cell.attr({"fill":color});
+            }
+            if(_this.st[yh][stElement.pokBot.x]["h"]!=undefined){
+                break;
+            }
+        }
+        
+        //X
+        for(var xd=stElement.pokBot.x+1;xd<_this.st[stElement.pokBot.y].length;xd++){
+            if(_this.st[stElement.pokBot.y][xd]["g"]!=undefined){
+                break;
+            }else{
+                _this.st[stElement.pokBot.y][xd].cell.attr({"fill":color});
+            }
+            if(_this.st[stElement.pokBot.y][xd]["d"]!=undefined){
+                break;
+            }
+        }
+        for(var xg=stElement.pokBot.x-1;xg>=0;xg--){
+            if(_this.st[stElement.pokBot.y][xg]["d"]!=undefined){
+                break;
+            }else{
+                _this.st[stElement.pokBot.y][xg].cell.attr({"fill":color});
+            }
+            if(_this.st[stElement.pokBot.y][xg]["g"]!=undefined){
+                break;
+            }
         }
     }
     

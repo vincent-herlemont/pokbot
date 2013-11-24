@@ -23,6 +23,7 @@ function oRBoard(width,height){
     this.paperSt.walls = paper.set();
     
     this.cellSize = {};
+    
     this.traceWall = function(pathPaper){
         var paperElement = paper.path(pathPaper);
         paperElement.attr({"stroke-width":2});
@@ -99,7 +100,8 @@ function oRBoard(width,height){
                     _this.createMoveCross(this,"#FDF");
                 });
         _this.paperSt.cells.click(function(event){
-            this.attr({"stroke":(this.attr("stroke")!="#f00")?"#f00":"green"});
+
+            
             this.toFront();
             _this.paperSt.walls.toFront();
             console.log(this.pokBot);
@@ -119,8 +121,8 @@ function oRBoard(width,height){
     this.createMoveCross = function(stElement,color){
         
         //Y
-        for(var yb=stElement.pokBot.y+1;yb<_this.st.length;yb++){
-            if(_this.st[yb][stElement.pokBot.x]["h"]!=undefined){
+        for(var yb=stElement.pokBot.y;yb<_this.st.length;yb++){
+            if(_this.st[yb][stElement.pokBot.x]["h"]!=undefined&&yb!=stElement.pokBot.y){
                 break;
             }else{
                _this.st[yb][stElement.pokBot.x].cell.attr({"fill":color});
@@ -129,8 +131,8 @@ function oRBoard(width,height){
                 break;
             }
         }
-        for(var yh=stElement.pokBot.y-1;yh>=0;yh--){
-            if(_this.st[yh][stElement.pokBot.x]["b"]!=undefined){
+        for(var yh=stElement.pokBot.y;yh>=0;yh--){
+            if(_this.st[yh][stElement.pokBot.x]["b"]!=undefined&&yh!=stElement.pokBot.y){
                 break;
             }else{
                _this.st[yh][stElement.pokBot.x].cell.attr({"fill":color});
@@ -141,8 +143,8 @@ function oRBoard(width,height){
         }
         
         //X
-        for(var xd=stElement.pokBot.x+1;xd<_this.st[stElement.pokBot.y].length;xd++){
-            if(_this.st[stElement.pokBot.y][xd]["g"]!=undefined){
+        for(var xd=stElement.pokBot.x;xd<_this.st[stElement.pokBot.y].length;xd++){
+            if(_this.st[stElement.pokBot.y][xd]["g"]!=undefined&&xd!=stElement.pokBot.x){
                 break;
             }else{
                 _this.st[stElement.pokBot.y][xd].cell.attr({"fill":color});
@@ -151,8 +153,8 @@ function oRBoard(width,height){
                 break;
             }
         }
-        for(var xg=stElement.pokBot.x-1;xg>=0;xg--){
-            if(_this.st[stElement.pokBot.y][xg]["d"]!=undefined){
+        for(var xg=stElement.pokBot.x;xg>=0;xg--){
+            if(_this.st[stElement.pokBot.y][xg]["d"]!=undefined&&xg!=stElement.pokBot.x){
                 break;
             }else{
                 _this.st[stElement.pokBot.y][xg].cell.attr({"fill":color});

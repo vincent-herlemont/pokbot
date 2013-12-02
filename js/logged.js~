@@ -49,7 +49,7 @@ function oRBoard(width,height){
 
 
        });
-       _this.paperSt.robots.attr({"stroke":"#ddd"});
+       _this.paperSt.robots.attr({"fill":"red","stroke":"#ddd"});
        _this.paperSt.robots.toFront();
 
     }

@@ -1,0 +1,42 @@
+body{
+	font-family: 'Lato', sans-serif;
+}
+
+#robotList{
+	padding:10px;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	-webkit-flex-flow: column wrap;
+	flex-flow: column wrap;
+	-webkit-align-content: center;
+	align-content: center;
+ }
+
+	#robotList .robot{
+	   display: -webkit-flex;
+	   display: flex;
+	   -webkit-flex-direction: row;
+	   flex-direction: row;
+	   margin-bottom: 10px;
+	}
+
+	#robotList .robot div{
+		border: 1px solid black;
+		padding:10px;
+	}
+		#robotList .colorBlock{
+			width:30px;
+		}
+
+		#robotList .robot .robotName{
+			font-size: 20px;
+		}
+		#robotList .robot .robotDirection img{
+			width:30px;
+			height:30px;
+			margin-right:10px;
+		}

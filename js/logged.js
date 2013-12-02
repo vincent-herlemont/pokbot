@@ -1,3 +1,5 @@
+taillePlateau = 10;
+
 var XHR = function(method, ad, params) {
 	var xhr = new XMLHttpRequest();
 	xhr.onload = params.onload || null;
@@ -13,6 +15,7 @@ var XHR = function(method, ad, params) {
 
 function oRBoard(width,height){
     var _this = this;
+    console.log(taillePlateau);
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
     //matrice*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
     this.st = []; // Matrice : grille avec des pointeurs. this.st[1][1].cell = cellule this.st[1][1].g = bordure gauche
@@ -34,6 +37,7 @@ function oRBoard(width,height){
     this.createRobots = function(robots){
        var _this = this;
 	    var rb ;
+	    
        $.each(robots,function(idRobot,robot){
 	
 	var new_cell = _this.st[robot.line][robot.column].cell;
@@ -47,11 +51,27 @@ function oRBoard(width,height){
         _this.paperSt.robots[idRobot].pokBot.y = robot.line;       
         _this.paperSt.robots[idRobot].attr({"fill":robot.color});
 
-
        });
        _this.paperSt.robots.attr({"stroke":"#ddd"});
        _this.paperSt.robots.toFront();
+       
+        _this.paperSt.robots.mouseover(function(event){
+                    _this.createMoveCross(this,"#FDF");
+                });
+	
+	        _this.paperSt.robots.mouseup(function(event){
+		  _this.proposeMove(this);		 
+                });
+    }
+    
+    this.proposeMove = function(robotCell){
+      $('#indic').append("désignez une case pour bouger le robot");
+       _this.paperSt.cells.mouseup(function(event){
+	 console.log("click on cell");
+	  robotCell.animate({x: 100, y: 100 }, 1000);
+	  _this.createCross(this,"#FFF");
 
+       } );
     }
     
     this.createBoard = function(boardElements,callback){
@@ -116,13 +136,6 @@ function oRBoard(width,height){
         _this.paperSt.walls.toFront();
         _this.paperSt.cells.toBack();
         _this.paperSt.cells.attr({"fill":"#fff","stroke":"#ddd"});
-        _this.paperSt.cells.mouseout(function(event){
-                    _this.createCross(this,"#FFF");
-                });
-        _this.paperSt.cells.mouseover(function(event){
-                    _this.createCross(this,"#FFD");
-                    _this.createMoveCross(this,"#FDF");
-                });
         _this.paperSt.cells.click(function(event){
             this.toFront();
             _this.paperSt.walls.toFront();

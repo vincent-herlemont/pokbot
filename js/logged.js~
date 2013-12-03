@@ -166,7 +166,6 @@ function oRBoard(width,height){
     }
     this.createMoveCross = function(stElement,color){
         
-        //Y
         for(var yb=stElement.pokBot.y;yb<_this.st.length;yb++){
             if(_this.st[yb][stElement.pokBot.x]["h"]!=undefined&&yb!=stElement.pokBot.y){
                 break;

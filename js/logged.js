@@ -74,10 +74,10 @@ function oRBoard(width,height){
 	 if (!flag) {
 	  flag = true;
 	  var cell = this;
-	  robotCell.pokBot.y = this.pokBot.y;
-	  robotCell.pokBot.x = this.pokBot.x;
 	  _this.createMoveCross(robotCell,"#FFF");	
 	  _this.createCross(robotCell,"#FFF");	  
+	  robotCell.pokBot.y = this.pokBot.y;
+	  robotCell.pokBot.x = this.pokBot.x;
 	  robotCell.animate({x: this.attr("x"), y: this.attr("y") }, 600, function(){
 	    	  robotCell.attr({"x":this.attr("x"),"y":this.attr("y")});
 	    }

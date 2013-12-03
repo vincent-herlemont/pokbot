@@ -99,14 +99,31 @@ function oRBoard(width,height){
     this.checkIfMoveOk = function(robot, cell){
       console.log("check mowe");
       console.log(cell.attr("fill"));
-      if(cell.attr("fill")=="#FDF"){
+      if(cell.attr("fill")=="#FFFFCC"){
 	console.log("mov ok");
 	if(cell.pokBot.y != robot.pokBot.y){
-	  console.log("bouger en colonne");
+	  if(cell.pokBot.y > robot.pokBot.y){
+	    //bouger en bas
+	    console.log("en bas");
+	  }else{
+	    //bouger en haut
+	    	    console.log("en haut");
 
+	  }
 	}else{
+	  if(cell.pokBot.x > robot.pokBot.x){
+	    //bouger a droite
+	    	    console.log("a droite");
+
+	  }else{
+	    //bouger a gauche
+	    	    console.log("a gauche");
+
+	  }
 	  console.log("bouger en ligne");
 	}
+	return true;
+      } else if(cell.attr("fill")=="#FFCC99"){
 	return true;
       }
       return false;

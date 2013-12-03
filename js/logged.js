@@ -56,7 +56,7 @@ function oRBoard(width,height){
        _this.paperSt.robots.toFront();
        
         _this.paperSt.robots.mousedown(function(event){
-                    _this.createMoveCross(this,"#FDF");
+                    _this.createMoveCross(this,"#FFFFCC","#FFCC99");
                 });
 	
 	        _this.paperSt.robots.mouseup(function(event){
@@ -101,7 +101,13 @@ function oRBoard(width,height){
       console.log(cell.attr("fill"));
       if(cell.attr("fill")=="#FDF"){
 	console.log("mov ok");
-	      return true;
+	if(cell.pokBot.y != robot.pokBot.y){
+	  console.log("bouger en colonne");
+
+	}else{
+	  console.log("bouger en ligne");
+	}
+	return true;
       }
       return false;
     }
@@ -179,50 +185,62 @@ function oRBoard(width,height){
             _this.st[stElement.pokBot.y][x].cell.attr({"fill":color});
         }
     }
-    this.createMoveCross = function(stElement,color){
-        
+    this.createMoveCross = function(stElement,color, colorEnd){
+        var lastx1 = "";
+	var lasty1 = "";
+	var lastx2 = "";
+	var lasty2 = "";
         for(var yb=stElement.pokBot.y;yb<_this.st.length;yb++){
             if(_this.st[yb][stElement.pokBot.x]["h"]!=undefined&&yb!=stElement.pokBot.y){
                 break;
             }else{
                _this.st[yb][stElement.pokBot.x].cell.attr({"fill":color});
+	        lastx1 = _this.st[yb][stElement.pokBot.x].cell;
             }
             if(_this.st[yb][stElement.pokBot.x]["b"]!=undefined){
                 break;
             }
         }
+        lastx1.attr({"fill":colorEnd});
+	
         for(var yh=stElement.pokBot.y;yh>=0;yh--){
             if(_this.st[yh][stElement.pokBot.x]["b"]!=undefined&&yh!=stElement.pokBot.y){
                 break;
             }else{
-               _this.st[yh][stElement.pokBot.x].cell.attr({"fill":color});
+               lastx2 = _this.st[yh][stElement.pokBot.x].cell.attr({"fill":color});
             }
             if(_this.st[yh][stElement.pokBot.x]["h"]!=undefined){
                 break;
             }
         }
+        lastx2.attr({"fill":colorEnd});
+
         
         //X
         for(var xd=stElement.pokBot.x;xd<_this.st[stElement.pokBot.y].length;xd++){
             if(_this.st[stElement.pokBot.y][xd]["g"]!=undefined&&xd!=stElement.pokBot.x){
                 break;
             }else{
-                _this.st[stElement.pokBot.y][xd].cell.attr({"fill":color});
+                lasty1 = _this.st[stElement.pokBot.y][xd].cell.attr({"fill":color});
             }
             if(_this.st[stElement.pokBot.y][xd]["d"]!=undefined){
                 break;
             }
         }
+        lasty1.attr({"fill":colorEnd});
+
         for(var xg=stElement.pokBot.x;xg>=0;xg--){
             if(_this.st[stElement.pokBot.y][xg]["d"]!=undefined&&xg!=stElement.pokBot.x){
                 break;
             }else{
-                _this.st[stElement.pokBot.y][xg].cell.attr({"fill":color});
+                lasty2 = _this.st[stElement.pokBot.y][xg].cell.attr({"fill":color});
             }
             if(_this.st[stElement.pokBot.y][xg]["g"]!=undefined){
                 break;
             }
         }
+                lasty2.attr({"fill":colorEnd});
+
     }
     
     $.getJSON( "/"+document.getElementById('idGame').value, function( grille ) {

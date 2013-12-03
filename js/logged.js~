@@ -55,28 +55,40 @@ function oRBoard(width,height){
        _this.paperSt.robots.attr({"stroke":"#ddd"});
        _this.paperSt.robots.toFront();
        
-
-
-      _this.paperSt.robots.mouseout(function(event){
-                    //_this.createCross(this,"#FFF");
-                });
-        _this.paperSt.robots.mouseover(function(event){
+        _this.paperSt.robots.mousedown(function(event){
                     _this.createMoveCross(this,"#FDF");
                 });
 	
 	        _this.paperSt.robots.mouseup(function(event){
-		  _this.proposeMove(this);		 
+		  _this.proposeMove(this);	
                 });
     }
     
     this.proposeMove = function(robotCell){
+      var _this = this;
+      var flag  = false;
       $('#indic').append("désignez une case pour bouger le robot");
+      console.log("propose move");
+      console.log("robot position : " + robotCell.attr("x") + " " + robotCell.attr("y"));
        _this.paperSt.cells.mouseup(function(event){
-	 console.log("click on cell");
-	  robotCell.animate({x: 100, y: 100 }, 1000);
-	  _this.createCross(this,"#FFF");
+	 if (!flag) {
+	  flag = true;
+	  var cell = this;
+	  robotCell.pokBot.y = this.pokBot.y;
+	  robotCell.pokBot.x = this.pokBot.x;
+	  _this.createMoveCross(robotCell,"#FFF");	
+	  _this.createCross(robotCell,"#FFF");	  
+	  robotCell.animate({x: this.attr("x"), y: this.attr("y") }, 600, function(){
+	    	  robotCell.attr({"x":this.attr("x"),"y":this.attr("y")});
+	    }
+	  );
+	 }
 
-       } );
+       });
+              _this.paperSt.robots.toFront();
+
+       _this.paperSt.robots.attr({"stroke":"#ddd"});
+       _this.paperSt.robots.toFront();
     }
     
     this.createBoard = function(boardElements,callback){
@@ -141,13 +153,6 @@ function oRBoard(width,height){
         _this.paperSt.walls.toFront();
         _this.paperSt.cells.toBack();
         _this.paperSt.cells.attr({"fill":"#fff","stroke":"#ddd"});
-        _this.paperSt.cells.click(function(event){
-            this.toFront();
-            _this.paperSt.walls.toFront();
-            console.log(this.pokBot);
-            console.log(_this.st[this.pokBot.y][this.pokBot.x]);
-
-        });
 	callback();
     };
     

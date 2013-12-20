@@ -1,3 +1,3 @@
 <h1>Pokbot</h1>
-parceque vous pouvez dire vive lemon : pour installer il sufi de vous metre a la racine du projet <br />
+parceque vous pouvez dire vive lemon : pour installer il sufi de vous metre a la racine du projet <br/>
 et faire : <b>npm install</b>

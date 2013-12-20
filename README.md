@@ -1,7 +1,8 @@
 <h1>Pokbot</h1>
-parceque vous pouvez dire vive lemon : pour installer il sufi de vous metre a la racine du projet <br/>
-et faire : <i>npm install</i><br>
 J'ai refait l'architecture pour "simplifier" les choses.<br/>
+Pour installer il sufi de vous metre a la racine du projet <br/>
+et faire : <b><i>npm install</i></b><br>
+puis pour executer : <b><i>node app.js</i></b>
 <h2>Nouvelle architecture</h2>
 <ul>
     <li>client

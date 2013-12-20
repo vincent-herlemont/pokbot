@@ -2,7 +2,7 @@
     "name": "pockbot",
     "version": "0.1.0",
     "description": "projet M2 miage",
-    "main": "ServeurRasendeRoboter.js",
+    "main": "app.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },

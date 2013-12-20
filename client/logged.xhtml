@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+    <title>Rasende Roboter</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="lib/jquery/js/jquery-1.10.2.js"></script>
+    <script src="lib/jquery/js/cookies-0.3.1.js"></script>
+    <script src="lib/raphael/js/raphael.js"></script>
+    <script src="js/logged.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body onload="init()">
+<header>
+    <h1>Partie __IDGAME__ __STATE__</h1>
+
+    <p>Vous êtes connecté en tant que __LOGIN__</p>
+
+    <div id="indic"></div>
+    <input id="login" type="hidden" value="__LOGIN__"/>
+    <input id="idGame" type="hidden" value="__IDGAME__"/>
+</header>
+<section>
+    <nav>
+        <ul id="lesParticipants"/>
+    </nav>
+    <section id="partieRaphael">
+
+    </section>
+    <section id="partie">
+        <table id="board">
+        </table>
+    </section>
+
+</section>
+<footer>
+    Mini-projet IHM de L3 MIAGE...
+</footer>
+</body>
+</html>
+

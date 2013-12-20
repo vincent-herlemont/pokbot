@@ -1,3 +1,21 @@
 <h1>Pokbot</h1>
 parceque vous pouvez dire vive lemon : pour installer il sufi de vous metre a la racine du projet <br/>
-et faire : <b>npm install</b>
+et faire : <i>npm install</i><br>
+J'ai refait l'architecture pour "simplifier" les choses.<br/>
+<h2>Nouvelle architecture</h2>
+<ul>
+    <li>client
+        <ul>
+            <li>Vous vous demerder pour comprendre !</li>
+        </ul>
+    </li>
+    <li>server
+        <ul>
+            <li>Plateau.js ( le plateau )</li>
+            <li>RasendeRoboter.js ( l'intelligence du jeu si il y en a)</li>
+            <li>ServeurRasendRoboter.js ( le serveur web )</li>
+        </ul>
+    </li>
+    <li>app.js (le point d'entrer du programme) <b>commande run</b> : <i>node app.js</i></li>
+    <li>package.json (descripteur du projet démandances etc ... ) <b>commande run</b> : <i>npm install</i></li>
+</ul>

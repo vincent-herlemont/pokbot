@@ -6,7 +6,7 @@ J'ai refait l'architecture pour "simplifier" les choses.<br/>
 <ul>
     <li>client
         <ul>
-            <li>Vous vous demerder pour comprendre !</li>
+            <li>Vous vous demerdez pour comprendre !</li>
         </ul>
     </li>
     <li>server

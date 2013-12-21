@@ -102,11 +102,10 @@ function oRBoard(width, height) {
     this.checkIfMoveOk = function (robot, cell) {
         console.log("check mowe");
         console.log(cell.attr("fill"));
-        if (cell.attr("fill") == "#FDF") {
+        if (cell.attr("fill") == "#FFCC99") {
             console.log("mov ok");
             if (cell.pokBot.y != robot.pokBot.y) {
                 console.log("bouger en colonne");
-
             } else {
                 console.log("bouger en ligne");
             }

@@ -1,7 +1,7 @@
-var plateau = require('./Plateau.js');
+var p = require('./plateau.js');
 exports.RasendeRoboter = function () {
     return {
-        dataPlateau: plateau.dataPlateau, cibles: plateau.cibles, cible: null, robots: [], init: function (idTable) {
+        dataPlateau: p.dataPlateau, cibles: p.cibles, cible: null, robots: [], init: function (idTable) {
             // Choisir une cible au hasard
             this.cible = Math.floor(Math.random() * this.cibles.length);
             // Placer les robots au hasard

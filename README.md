@@ -12,11 +12,11 @@ puis pour executer : <b><i>node app.js</i></b>
     </li>
     <li>server
         <ul>
-            <li>Plateau.js ( le plateau )</li>
+            <li>plateau.js ( le plateau )</li>
             <li>RasendeRoboter.js ( l'intelligence du jeu si il y en a)</li>
             <li>ServeurRasendRoboter.js ( le serveur web )</li>
         </ul>
     </li>
     <li>app.js (le point d'entrer du programme) <b>commande run</b> : <i>node app.js</i></li>
-    <li>package.json (descripteur du projet démandances etc ... ) <b>commande run</b> : <i>npm install</i></li>
+    <li>package.json (descripteur du projet dépendance etc ... ) <b>commande run</b> : <i>npm install</i></li>
 </ul>

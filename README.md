@@ -1,5 +1,6 @@
 <h1>Pokbot</h1>
-!https://travis-ci.org/sovlin/pokbot.png?branch=master!:https://travis-ci.org/sovlin/pokbot
+{<img src="https://travis-ci.org/sovlin/pokbot.png?branch=master" alt="Build Status" />}[https://travis-ci.org/sovlin/pokbot]
+
 J'ai refait l'architecture pour "simplifier" les choses.<br/>
 Pour installer il sufi de vous metre a la racine du projet <br/>
 et faire : <b><i>npm install</i></b><br>

@@ -1,5 +1,5 @@
-<h1>Pokbot</h1>
-{<img src="https://travis-ci.org/sovlin/pokbot.png?branch=master" alt="Build Status" />}[https://travis-ci.org/sovlin/pokbot]
+<h1>Pokbot <img src="https://travis-ci.org/sovlin/pokbot.png?branch=master" alt="Build Status" />
+</h1>
 
 J'ai refait l'architecture pour "simplifier" les choses.<br/>
 Pour installer il sufi de vous metre a la racine du projet <br/>

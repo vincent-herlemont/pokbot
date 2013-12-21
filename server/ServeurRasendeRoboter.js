@@ -1,6 +1,6 @@
 var rasendeRoboter = require("./RasendeRoboter");
 var _server = {
-    pathClientPokbot:__dirname + "\\..\\client\\",
+    pathClientPokbot:__dirname + "/../client/",
     fs: require('fs'), express: require('express'), app: null, io: require('socket.io'), games: { list: {}, ProcessProposition: function (idGame, playerName, proposition) {
         if (this.list[idGame] == undefined) {
             throw new Error('NO_SUCH_GAME_ID');

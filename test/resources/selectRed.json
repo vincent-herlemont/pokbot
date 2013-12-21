@@ -1,0 +1,10 @@
+{
+    "idGame": "ok",
+    "login": "ok",
+    "proposition": [
+        {
+            "command": "select",
+            "robot": "green"
+        }
+    ]
+}

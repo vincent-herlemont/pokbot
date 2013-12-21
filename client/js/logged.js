@@ -1,4 +1,10 @@
 taillePlateau = 10;
+$().ready(function(){
+    _login = document.getElementById('login').value;
+    _idGame = document.getElementById('idGame').value;
+});
+
+
 
 var XHR = function (method, ad, params) {
     var xhr = new XMLHttpRequest();
@@ -32,6 +38,14 @@ function oRBoard(width, height) {
     this.cellSize.height = 0;
     this.paperSt.robots = paper.set();
 
+    this.proposition = [];
+
+    this.send = {
+        "idGame": _idGame,
+        "login": _login,
+        "proposition": _this.proposition
+    }
+
     this.traceWall = function (pathPaper) {
         var paperElement = paper.path(pathPaper);
         paperElement.attr({"stroke-width": 2});
@@ -60,11 +74,21 @@ function oRBoard(width, height) {
 
         _this.paperSt.robots.mousedown(function (event) {
             _this.createMoveCross(this, "#FFFFCC", "#FFCC99");
+            _this.createMoveCrossServer(this);
         });
 
         _this.paperSt.robots.mouseup(function (event) {
             _this.proposeMove(this);
         });
+    }
+
+
+    this.createMoveCrossServer = function (robot) {
+        var couleurRobot = robot.attr("fill");
+        var proposition = {
+            "command":"select",
+            "robot": couleurRobot
+        }
     }
 
     this.proposeMove = function (robot) {
@@ -252,9 +276,9 @@ function oRBoard(width, height) {
         );
     });
 }
-
+var oRBoard;
 $(document).ready(function () {
-    var paper = new oRBoard(500, 500);
+    oRBoard = new oRBoard(500, 500);
 });
 
 
@@ -323,7 +347,10 @@ function init() {
     socket.on('solutions', function (data) {
         console.log("Solutions are :\n" + JSON.stringify(data.solutions));
     });
-    socket.emit('identification', { login: document.getElementById('login').value, idGame: document.getElementById('idGame').value}
+    socket.emit('identification', {
+            login: _login,
+            idGame: _idGame
+        }
     );
 
     displayGrid();

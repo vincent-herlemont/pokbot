@@ -1,7 +1,8 @@
 var rasendeRoboter = require("./RasendeRoboter");
 var _server = {
-    pathClientPokbot:__dirname + "/../client/",
-    fs: require('fs'), express: require('express'), app: null, io: require('socket.io'), games: { list: {}, ProcessProposition: function (idGame, playerName, proposition) {
+    pathClientPokbot: __dirname + "/../client/",
+    fs: require('fs'), express: require('express'), app: null, io: require('socket.io'),
+    games: { list: {}, ProcessProposition: function (idGame, playerName, proposition) {
         if (this.list[idGame] == undefined) {
             throw new Error('NO_SUCH_GAME_ID');
         }
@@ -158,7 +159,7 @@ var _server = {
             .use(this.express.bodyParser())
             .get('/', function (req, res) {
 
-                var pathLoginPage = _server.pathClientPokbot+ "login.xhtml";
+                var pathLoginPage = _server.pathClientPokbot + "login.xhtml";
                 _server.fs.readFile(pathLoginPage,
                     function (err, data) {
                         if (err) {
@@ -212,9 +213,12 @@ var _server = {
 
             })
             .use(function (req, res) {
+                var idGame = req._parsedUrl.pathname.slice(1);
+                var REST_command = idGame;
                 if (req.method == "GET") {
                     // Is there a game with that URL ?
-                    var idGame = req.url.slice(1);
+
+
                     if (_server.games.list[ idGame ]) {
                         res.writeHead(200, {'Content-Type': 'application/json'});
                         res.end(JSON.stringify(_server.games.list[ idGame ].game.getConfiguration()));
@@ -228,8 +232,6 @@ var _server = {
                     res.end('.');
                 }
                 if (req.method == "POST") {
-                    // Is it a proposition of solution?
-                    var REST_command = req.url.slice(1);
                     // console.log("Receiving a proposition :");
                     switch (REST_command) {
                         case 'proposition':
@@ -238,9 +240,10 @@ var _server = {
                             try {
                                 answer = _server.games.ProcessProposition(req.body.idGame
                                     , req.body.login
-                                    , JSON.parse(req.body.proposition));
+                                    , req.body.proposition);
                             }
                             catch (err) {
+                                console.log(err);
                                 switch (err.message) {
                                     case 'NO_SUCH_GAME_ID':
                                         _server.games.new(req.body.idGame);

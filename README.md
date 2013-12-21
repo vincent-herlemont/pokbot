@@ -1,4 +1,4 @@
-<h1>Pokbot <img src="https://travis-ci.org/sovlin/pokbot.png?branch=master" alt="Build Status" />
+<h1>Pokbot <a href="https://travis-ci.org/sovlin/pokbot"><img src="https://travis-ci.org/sovlin/pokbot.png?branch=master" alt="Build Status" /></a>
 </h1>
 
 J'ai refait l'architecture pour "simplifier" les choses.<br/>

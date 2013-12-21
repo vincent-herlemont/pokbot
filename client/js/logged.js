@@ -74,12 +74,15 @@ function oRBoard(width, height) {
         });
         _this.paperSt.robots.attr({"stroke": "#ddd"});
         _this.paperSt.robots.toFront();
-
-        _this.paperSt.robots.mouseup(function (event) {
-            _this.proposeMove(this);
-        });
+        _this.paperSt.robots.mouseup(_this.createRobots.handleProposeMove);
         _this.paperSt.walls.toFront();
 
+    }
+    this.createRobots.handleProposeMove = function () {
+        if (_this.proposeMove.handleCells.lock == false) {
+            _this.proposeMove.unhandle()
+            _this.proposeMove(this);
+        }
     }
 
     this.sendPropositon = function (f, _robot, _cell) {
@@ -112,22 +115,37 @@ function oRBoard(width, height) {
         }, robot);
     }
     this.proposeMove.cells = [];
-    this.proposeMove.unhandle = function(){
-        $.each(i,cell,function(){
-            cell.unmouseup(_this.proposeMove.handleCells);
-        });
+    this.proposeMove.unhandle = function () {
+        if (_this.proposeMove.robot != undefined) {
+            _this.createMoveCross(_this.proposeMove.robot, "#FFF");
+            _this.createCross(_this.proposeMove.robot, "#FFF");
+        }
+        if (_this.proposeMove.cells.length > 0) {
+            $.each(_this.proposeMove.cells, function (i, cell) {
+                _this.proposeMove.cells.pop();
+                try {
+                    cell.unmouseup(_this.proposeMove.handleCells);
+                } catch (err) {
+                }
+                ;
+            });
+        }
     }
     this.proposeMove.handleCells = function () {
-        var proposition = {
-            "command": "move",
-            "line": this.pokBot.y + "",
-            "column": this.pokBot.x + ""
+        if (_this.proposeMove.handleCells.lock == false) {
+            _this.proposeMove.handleCells.lock = true;
+            var proposition = {
+                "command": "move",
+                "line": this.pokBot.y + "",
+                "column": this.pokBot.x + ""
+            }
+            _this.oJsonProposition.push(proposition);
+            _this.sendPropositon(function (data, robot, cell) {
+                _this.moveRobot(robot, cell);
+            }, _this.proposeMove.robot, this);
         }
-        _this.oJsonProposition.push(proposition);
-        _this.sendPropositon(function (data, robot, cell) {
-            _this.moveRobot(robot, cell);
-        }, _this.proposeMove.robot, this);
     }
+    this.proposeMove.handleCells.lock = false;
     this.moveRobot = function (robot, cell) {
         _this.createMoveCross(robot, "#FFF");
         _this.createCross(robot, "#FFF");
@@ -135,9 +153,10 @@ function oRBoard(width, height) {
         robot.pokBot.x = cell.pokBot.x;
         robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
                 robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
+                _this.proposeMove.handleCells.lock = false;
+                _this.proposeMove.unhandle();
             }
         );
-        _this.proposeMove.unhandle();
     }
 
     this.createBoard = function (boardElements, callback) {

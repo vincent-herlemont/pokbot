@@ -4,7 +4,7 @@
     "proposition": [
         {
             "command": "select",
-            "robot": "green"
+            "robot": "red"
         }
     ]
 }

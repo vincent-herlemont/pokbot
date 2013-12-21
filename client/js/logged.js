@@ -1,9 +1,8 @@
 taillePlateau = 10;
-$().ready(function(){
+$().ready(function () {
     _login = document.getElementById('login').value;
     _idGame = document.getElementById('idGame').value;
 });
-
 
 
 var XHR = function (method, ad, params) {
@@ -36,14 +35,18 @@ function oRBoard(width, height) {
     this.cellSize = {};
     this.cellSize.width = 0;
     this.cellSize.height = 0;
+    this.colorCell = {};
+    this.colorCell.destination = "#FFCC99";
+    this.colorCell.versDestination = "#FFFFCC";
+
     this.paperSt.robots = paper.set();
 
-    this.proposition = [];
+    this.oJsonProposition = [];
 
-    this.send = {
+    this.oJsonSendProposition = {
         "idGame": _idGame,
         "login": _login,
-        "proposition": _this.proposition
+        "proposition": _this.oJsonProposition
     }
 
     this.traceWall = function (pathPaper) {
@@ -72,70 +75,69 @@ function oRBoard(width, height) {
         _this.paperSt.robots.attr({"stroke": "#ddd"});
         _this.paperSt.robots.toFront();
 
-        _this.paperSt.robots.mousedown(function (event) {
-            _this.createMoveCross(this, "#FFFFCC", "#FFCC99");
-            _this.createMoveCrossServer(this);
-        });
-
         _this.paperSt.robots.mouseup(function (event) {
             _this.proposeMove(this);
         });
+        _this.paperSt.walls.toFront();
+
     }
 
-
-    this.createMoveCrossServer = function (robot) {
-        var couleurRobot = robot.attr("fill");
-        var proposition = {
-            "command":"select",
-            "robot": couleurRobot
-        }
-    }
-
-    this.proposeMove = function (robot) {
-        var _this = this;
-        var flag = false;
-        $('#indic').html("désignez une case pour bouger le robot");
-        console.log("propose move");
-        console.log("robot position : " + robot.attr("x") + " " + robot.attr("y"));
-        _this.paperSt.cells.mouseup(function (event) {
-            if (!flag) {
-                flag = true;
-                _this.moveRobot(robot, this);
+    this.sendPropositon = function (f, _robot, _cell) {
+        $.post("proposition", _this.oJsonSendProposition, function (data) {
+            try {
+                f(data, _robot, _cell);
+                if (data.state != "INCOMPLETE") {
+                    _this.oJsonProposition.pop();
+                }
+            } catch (err) {
             }
         });
     }
-
+    this.proposeMove = function (robot) {
+        $('#indic').html("désignez une case pour bouger le robot");
+        _this.proposeMove.robot = robot;
+        var couleurRobot = robot.attr("fill");
+        var proposition = {
+            "command": "select",
+            "robot": couleurRobot
+        }
+        _this.oJsonProposition.push(proposition);
+        _this.sendPropositon(function (data, robot) {
+            console.log(robot.pokBot);
+            $.each(data.nextPositions, function (i, value) {
+                _this.st[value.l][value.c].cell.attr({"fill": _this.colorCell.destination});
+                _this.st[value.l][value.c].cell.mouseup(_this.proposeMove.handleCells);
+                _this.proposeMove.cells.push(_this.st[value.l][value.c].cell);
+            })
+        }, robot);
+    }
+    this.proposeMove.cells = [];
+    this.proposeMove.unhandle = function(){
+        $.each(i,cell,function(){
+            cell.unmouseup(_this.proposeMove.handleCells);
+        });
+    }
+    this.proposeMove.handleCells = function () {
+        var proposition = {
+            "command": "move",
+            "line": this.pokBot.y + "",
+            "column": this.pokBot.x + ""
+        }
+        _this.oJsonProposition.push(proposition);
+        _this.sendPropositon(function (data, robot, cell) {
+            _this.moveRobot(robot, cell);
+        }, _this.proposeMove.robot, this);
+    }
     this.moveRobot = function (robot, cell) {
-        var _this = this;
-        var authorized = _this.checkIfMoveOk(robot, cell);
-        console.log(authorized);
         _this.createMoveCross(robot, "#FFF");
         _this.createCross(robot, "#FFF");
-        if (authorized) {
-            robot.pokBot.y = cell.pokBot.y;
-            robot.pokBot.x = cell.pokBot.x;
-            robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
-                    robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
-                }
-            );
-        } else {
-            $('#indic').html("mouvement non autorisé");
-        }
-    }
-
-    this.checkIfMoveOk = function (robot, cell) {
-        console.log("check mowe");
-        console.log(cell.attr("fill"));
-        if (cell.attr("fill") == "#FFCC99") {
-            console.log("mov ok");
-            if (cell.pokBot.y != robot.pokBot.y) {
-                console.log("bouger en colonne");
-            } else {
-                console.log("bouger en ligne");
+        robot.pokBot.y = cell.pokBot.y;
+        robot.pokBot.x = cell.pokBot.x;
+        robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
+                robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
             }
-            return true;
-        }
-        return false;
+        );
+        _this.proposeMove.unhandle();
     }
 
     this.createBoard = function (boardElements, callback) {

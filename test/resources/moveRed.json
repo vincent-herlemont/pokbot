@@ -1,0 +1,15 @@
+{
+    "idGame": "ok",
+    "login": "ok",
+    "proposition": [
+        {
+            "command": "select",
+            "robot":"red"
+        },
+        {
+            "command": "move",
+            "line":6,
+            "column":8
+        }
+    ]
+}

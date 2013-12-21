@@ -44,38 +44,46 @@ exports.RasendeRoboter = function () {
             // console.log("getNextPositionsFrom " +line+" "+column);
             var nexts = [], l, c;
             // Go left
-            l = line;
-            c = column;
+            l = parseInt(line);
+            c = parseInt(column);
             while (this.dataPlateau[l][c].g == undefined
                 && this.dataPlateau[l][c - 1].d == undefined
-                && this.NoRobot(robots, l, c - 1)) c--;
+                && this.NoRobot(robots, l, c - 1)){
+                c--;
+            }
             if (c != column) {
                 nexts.push({l: line, c: c});
             }
             // Go right
-            l = line;
-            c = column;
+            l = parseInt(line);
+            c = parseInt(column);
             while (this.dataPlateau[l][c].d == undefined
                 && this.dataPlateau[l][c + 1].g == undefined
-                && this.NoRobot(robots, l, c + 1)) c++;
+                && this.NoRobot(robots, l, c + 1)) {
+                c++;
+            }
             if (c != column) {
                 nexts.push({l: line, c: c});
             }
             // Go top
-            l = line;
-            c = column;
+            l = parseInt(line);
+            c = parseInt(column);
             while (this.dataPlateau[l][c].h == undefined
                 && this.dataPlateau[l - 1][c].b == undefined
-                && this.NoRobot(robots, l - 1, c)) l--;
+                && this.NoRobot(robots, l - 1, c)){
+                l--;
+            }
             if (l != line) {
                 nexts.push({l: l, c: column});
             }
             // Go down
-            l = line;
-            c = column;
+            l = parseInt(line);
+            c = parseInt(column);
             while (this.dataPlateau[l][c].b == undefined
                 && this.dataPlateau[l + 1][c].h == undefined
-                && this.NoRobot(robots, l + 1, c)) l++;
+                && this.NoRobot(robots, l + 1, c)){
+                l++;
+            }
             if (l != line) {
                 nexts.push({l: l, c: column});
             }

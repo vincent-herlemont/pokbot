@@ -1,74 +1,101 @@
 taillePlateau = 10;
+var _login, _idGame;
 $().ready(function () {
     _login = document.getElementById('login').value;
     _idGame = document.getElementById('idGame').value;
 });
 
-
-var XHR = function (method, ad, params) {
-    var xhr = new XMLHttpRequest();
-    xhr.onload = params.onload || null;
-    xhr.open(method, ad);
-    if (method == 'POST') {
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    }
-    var variables = params.variables || null
-        , str = '';
-    for (var i in variables) {
-        str += i + '=' + encodeURIComponent(variables[i]) + '&';
-    }
-    xhr.send(str);
-}
-
 function oRBoard(width, height) {
     var _this = this;
     console.log(taillePlateau);
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
-    //matrice*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
+    /*
+     $(window).resize(function(){
+     paper.setSize($(window).height(), $(window).width());
+     console.log("window size : "+$(window).height()+"/"+$(window).width());
+     // this.cellSize.width = ($(window).height()/this.st.length);
+     // this.cellSize.height = ($(window).width()/this.st.length);
+     });
+     */
+    //matric*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
     this.st = []; // Matrice : grille avec des pointeurs. this.st[1][1].cell = cellule this.st[1][1].g = bordure gauche
 
+    this.play = {}
+    this.play.succes = false;
+
     //ObjetPaper
-    this.paperSt = {}
+    this.paperSt = {};
     this.paperSt.cells = paper.set(); // references memoires ne pas s'en servir
     this.paperSt.walls = paper.set(); // references memoires ne pas s'en servir
+    this.paperObj = {};
+    this.paperObj.target = null;
 
+    //Caractéritique cellules
     this.cellSize = {};
     this.cellSize.width = 0;
     this.cellSize.height = 0;
     this.colorCell = {};
+
+    //Caractéritique Robots
     this.colorCell.destination = "#FFCC99";
     this.colorCell.versDestination = "#FFFFCC";
-
     this.paperSt.robots = paper.set();
-
     this.oJsonProposition = [];
-
     this.oJsonSendProposition = {
         "idGame": _idGame,
         "login": _login,
         "proposition": _this.oJsonProposition
-    }
+    };
 
     this.traceWall = function (pathPaper) {
         var paperElement = paper.path(pathPaper);
         paperElement.attr({"stroke-width": 2});
         return paperElement;
+    };
+    this.convertGrilleToCardinal = function (objGrille) {
+        var new_cell = null;
+        try {
+            new_cell = _this.st[objGrille.line][objGrille.column].cell;
+        } catch (err) {
+        }
+        ;
+        try {
+            new_cell = _this.st[objGrille.l][objGrille.c].cell;
+        } catch (err) {
+        }
+        ;
+        var _x = new_cell.attr("x");
+        var _y = new_cell.attr("y");
+        return {x: _x, y: _y};
     }
-
+    this.convertGrilleToCardinal.center = function (objGrille) {
+        var r = _this.convertGrilleToCardinal(objGrille);
+        r.x = r.x + (_this.cellSize.width / 2);
+        r.y = r.y + (_this.cellSize.height / 2);
+        return r;
+    }
+    this.createTarget = function (target) {
+        var cardinal = _this.convertGrilleToCardinal.center(target);
+        _this.paperObj.target = paper.circle(cardinal.x, cardinal.y, _this.cellSize.width / 2.5);
+        _this.paperObj.target.attr({"fill": target.t});
+        _this.paperObj.target.attr({"stroke": "#ddd"});
+        _this.paperObj.target.pokBot = {};
+        _this.paperObj.target.pokBot.x = target.c;
+        _this.paperObj.target.pokBot.y = target.l;
+        _this.paperObj.target.toFront();
+    }
     this.createRobots = function (robots) {
         var _this = this;
 
         $.each(robots, function (idRobot, robot) {
 
-            var new_cell = _this.st[robot.line][robot.column].cell;
-            var x = new_cell.attr("x");
-            var y = new_cell.attr("y");
-
-            _this.paperSt.robots.push(paper.rect(x, y, (_this.cellSize.width), (_this.cellSize.width)));
+            var cardinal = _this.convertGrilleToCardinal(robot);
+            _this.paperSt.robots.push(paper.rect(cardinal.x, cardinal.y, (_this.cellSize.width), (_this.cellSize.width)));
 
             _this.paperSt.robots[idRobot].pokBot = {};
             _this.paperSt.robots[idRobot].pokBot.x = robot.column;
             _this.paperSt.robots[idRobot].pokBot.y = robot.line;
+            _this.paperSt.robots[idRobot].pokBot.y.type = "target";
             _this.paperSt.robots[idRobot].attr({"fill": robot.color});
 
         });
@@ -77,27 +104,32 @@ function oRBoard(width, height) {
         _this.paperSt.robots.mouseup(_this.createRobots.handleProposeMove);
         _this.paperSt.walls.toFront();
 
-    }
+    };
     this.createRobots.handleProposeMove = function () {
         if (_this.proposeMove.handleCells.lock == false) {
             _this.proposeMove.unhandle()
             _this.proposeMove(this);
         }
-    }
-
+    };
     this.sendPropositon = function (f, _robot, _cell) {
-        $.post("proposition", _this.oJsonSendProposition, function (data) {
-            try {
-                f(data, _robot, _cell);
-                if (data.state != "INCOMPLETE") {
-                    _this.oJsonProposition.pop();
+        if (_this.play.succes == false) {
+            $.post("proposition", _this.oJsonSendProposition, function (data) {
+                try {
+                    f(data, _robot, _cell);
+                    if (data.state == "INCOMPLETE") {
+
+                    } else if (data.state == "SUCCESS") {
+                        $('#indic').html("SUCCES !!!!");
+                        _this.play.succes = true;
+                    } else {
+                        _this.oJsonProposition.pop();
+                    }
+                } catch (err) {
                 }
-            } catch (err) {
-            }
-        });
-    }
+            });
+        }
+    };
     this.proposeMove = function (robot) {
-        $('#indic').html("désignez une case pour bouger le robot");
         _this.proposeMove.robot = robot;
         var couleurRobot = robot.attr("fill");
         var proposition = {
@@ -111,6 +143,9 @@ function oRBoard(width, height) {
                 _this.st[value.l][value.c].cell.attr({"fill": _this.colorCell.destination});
                 _this.st[value.l][value.c].cell.mouseup(_this.proposeMove.handleCells);
                 _this.proposeMove.cells.push(_this.st[value.l][value.c].cell);
+                if (_this.paperObj.target.pokBot.x == value.c && _this.paperObj.target.pokBot.y == value.l) {
+                    _this.paperObj.target.mouseup(_this.proposeMove.handleCells);
+                }
             })
         }, robot);
     }
@@ -121,6 +156,11 @@ function oRBoard(width, height) {
             _this.createCross(_this.proposeMove.robot, "#FFF");
         }
         if (_this.proposeMove.cells.length > 0) {
+            try {
+                _this.paperObj.target.unmouseup(_this.proposeMove.handleCells);
+            } catch (err) {
+            }
+            ;
             $.each(_this.proposeMove.cells, function (i, cell) {
                 _this.proposeMove.cells.pop();
                 try {
@@ -151,28 +191,36 @@ function oRBoard(width, height) {
         _this.createCross(robot, "#FFF");
         robot.pokBot.y = cell.pokBot.y;
         robot.pokBot.x = cell.pokBot.x;
-        robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
-                robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
-                _this.proposeMove.handleCells.lock = false;
-                _this.proposeMove.unhandle();
-            }
-        );
+        if (cell.pokBot.type == "cell") {
+            robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
+                    robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
+                    _this.proposeMove.handleCells.lock = false;
+                    _this.proposeMove.unhandle();
+                }
+            );
+        } else {
+            robot.animate({x: cell.attr("cx") - (_this.cellSize.width / 2), y: cell.attr("cy") - (_this.cellSize.height / 2) }, 600, function () {
+                    robot.attr({"x": cell.attr("cx") - (_this.cellSize.width / 2), "y": cell.attr("cy") - (_this.cellSize.height / 2)});
+                    _this.proposeMove.handleCells.lock = false;
+                    _this.proposeMove.unhandle();
+                }
+            );
+        }
     }
-
     this.createBoard = function (boardElements, callback) {
+
         console.log(boardElements);
         _this.cellSize.width = (width / boardElements.length);
         var _idLineEnCour = 0;
         var _idCellEnCour = 0;
         var i_SetstWall = 0;
+
         $.each(boardElements, function (idLigne, ligne) {
-            _this.cellSize.height = (width / ligne.length);
+            _this.cellSize.height = (height / ligne.length);
             _idLineEnCour = idLigne;
             _this.st[idLigne] = [];
             $.each(ligne, function (idCell, cell) {
                 var i = 0
-                var u = (i / ligne.length);
-
                 _this.paperSt.cells.push(paper.rect(
                     ((_this.cellSize.width)) * idCell,
                     ((_this.cellSize.width)) * _idLineEnCour,
@@ -184,6 +232,7 @@ function oRBoard(width, height) {
                 _this.paperSt.cells[_idCellEnCour].pokBot = {};
                 _this.paperSt.cells[_idCellEnCour].pokBot.x = idCell;
                 _this.paperSt.cells[_idCellEnCour].pokBot.y = idLigne;
+                _this.paperSt.cells[_idCellEnCour].pokBot.type = "cell";
                 _idCellEnCour++;
                 $.each(cell, function (NameClass, value) {
                     var x = _this.st[idLigne][idCell].cell.attr("x");
@@ -223,7 +272,6 @@ function oRBoard(width, height) {
         _this.paperSt.cells.attr({"fill": "#fff", "stroke": "#ddd"});
         callback();
     };
-
     this.createCross = function (stElement, color) {
         for (var y = 0; y < _this.st.length; y++) {
             _this.st[y][stElement.pokBot.x].cell.attr({"fill": color});
@@ -289,60 +337,17 @@ function oRBoard(width, height) {
         lasty2.attr({"fill": colorEnd});
 
     }
-
     $.getJSON("/" + document.getElementById('idGame').value, function (grille) {
         _this.createBoard(grille.board, function () {
+                _this.createTarget(grille.target);
                 _this.createRobots(grille.robots);
             }
         );
     });
 }
-var oRBoard;
 $(document).ready(function () {
-    oRBoard = new oRBoard(500, 500);
+    oRBoard = new oRBoard(800, 800);
 });
-
-
-function createRobots(robotElements) {
-    $.each(robotElements, function (idRobot, robot) {
-        //console.log(robot);
-        $("#board tr:eq(" + robot.line + ") td:eq(" + robot.column + ")").addClass("robot" + robot.color);
-
-    });
-}
-
-function createTarget(targetElement) {
-    $("#board tr:eq(" + targetElement.l + ") td:eq(" + targetElement.c + ")").addClass("cible" + targetElement.t);
-}
-
-function createBoard(boardElements) {
-    var _DOMBoard = $("#board");
-    $.each(boardElements, function (idLigne, ligne) {
-        var _DOMLigne = $("<tr></tr>");
-        $(_DOMBoard).append(_DOMLigne);
-        $.each(ligne, function (idLigne, cell) {
-            var _DOMCase = $("<td></td>");
-            $.each(cell, function (NameClass, value) {
-                $(_DOMCase).addClass(NameClass);
-            });
-            $(_DOMLigne).append(_DOMCase);
-        });
-    });
-}
-
-function displayGrid() {
-    $.getJSON("/" + document.getElementById('idGame').value, function (grille) {
-        //console.log(grille.robots);
-        createBoard(grille.board);
-        createTarget(grille.target);
-        createRobots(grille.robots);
-    });
-}
-
-function playGame() {
-    console.log("que le jeu commence");
-
-}
 
 
 function init() {
@@ -373,7 +378,4 @@ function init() {
             idGame: _idGame
         }
     );
-
-    displayGrid();
-    playGame();
 }

@@ -5,22 +5,104 @@
 font-family: Mopster;
 src: url("Mopster-Regular.otf") format("opentype");
 }
-
+html{
+  margin: 0;
+  padding: 0;
+}
 h1{
   font-family: Mopster;
   font-size: 60px;
-  color: #333;
+  margin-top: 0;
+  padding-top: 20px;
+  color: #459CE4;
+}
+h1.logged{
+  font-family: Arial;
+  font-size: 20px;
+}
+.nameP{
+  font-family: Mopster;
+  font-size: 30px;
+}
+h2{
+  color: grey;
+  font-size: 16px;
 }
 body{
   background: white;
+  height: 100%;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
+  margin: 0;
 }
-
+header{
+    background: #35384A;
+    margin: 0;
+    padding: 10px;
+    height : 200px;
+    border-bottom: 1px solid grey;
+}
+footer{
+  border-top: 1px solid grey;
+  width: 100%;
+  margin-top: 50px;
+  height: 50px;
+  clear: both;
+}
+section, footer{
+  background: white;
+  padding: 10px;
+  width: 100%;
+}
 #partieRaphael{
     width: 80%;
     height: auto;
     max-width: 800px;
     margin: 0 auto;
     max-height: 800px;
+}
+label{
+ display: inline-block; 
+ max-width: 350px; 
+ width: 40%;
+ text-align: right; 
+ padding: 10px;
+}
+input{
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    color: #555555;
+    width: 200px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    height: 28px;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    vertical-align: middle;
+}
+input:focus{
+      border: 1px solid #1ABC9C;
+
+}
+.goGame{
+	height: 39px;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.4);
+	color: #fff;
+	background-color: #459CE4;
+	box-shadow: 0px 3px 0px 0px #3293ba;
+	vertical-align: middle;
+	text-align: center;
+	border: none;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background 0.1s ease-in-out;
+	text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+	color: white;
+	border-radius: 3px;
+}
+.goGame:hover {
+	background-color: #1baae3;
 }
 
 #lesParties li{
@@ -48,15 +130,16 @@ body{
 }
 
 #lesParties li .name{
-  padding-top: 20px;
-  font-weight: bold;
+  padding-top: 30px;
+  font-family: Mopster;
+  font-size: 25px;
   display: block;
 }
 #lesParties li .subText{
   display: block;
   padding-top: 15px;
 }
-  
+
 .ciblegreen{
     background: url('images/greenTarget.jpg');
 }

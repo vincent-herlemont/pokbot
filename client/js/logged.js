@@ -357,6 +357,7 @@ function init() {
         var ul = document.getElementById('lesParticipants');
         ul.innerHTML = '';
         for (p in data.participants) {
+	  console.log("participants");
             var li = document.createElement('li');
             ul.appendChild(li);
             li.appendChild(document.createTextNode(data.participants[p]));

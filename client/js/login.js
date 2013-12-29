@@ -13,4 +13,8 @@ function init() {
 		}
 	);
 	socket.emit('loginPage');
+	$("#lesParties li").on("click", function(){
+	  $("#idGame").val($(this).children('.name').text());
+	   $( "#nouvellePartie" ).submit();
+	});
 }

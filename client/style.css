@@ -1,5 +1,20 @@
 #partie {
 }
+
+@font-face {
+font-family: Mopster;
+src: url("Mopster-Regular.otf") format("opentype");
+}
+
+h1{
+  font-family: Mopster;
+  font-size: 60px;
+  color: #333;
+}
+body{
+  background: white;
+}
+
 #partieRaphael{
     width: 80%;
     height: auto;
@@ -12,6 +27,7 @@
     background-color: grey;
     color: white;
     display: block;
+    cursor:  pointer;
     padding-left: 25px;
     padding-right: 25px;
     height: 150px;

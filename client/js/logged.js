@@ -9,14 +9,12 @@ function oRBoard(width, height) {
     var _this = this;
     console.log(taillePlateau);
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
-    /*
-     $(window).resize(function(){
-     paper.setSize($(window).height(), $(window).width());
-     console.log("window size : "+$(window).height()+"/"+$(window).width());
-     // this.cellSize.width = ($(window).height()/this.st.length);
-     // this.cellSize.height = ($(window).width()/this.st.length);
-     });
-     */
+       paper.setViewBox(0,0,800,800,true);
+      
+      var svg = document.querySelector("svg");
+      svg.removeAttribute("width");
+      svg.removeAttribute("height");
+     
     //matric*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
     this.st = []; // Matrice : grille avec des pointeurs. this.st[1][1].cell = cellule this.st[1][1].g = bordure gauche
 
@@ -52,6 +50,8 @@ function oRBoard(width, height) {
         paperElement.attr({"stroke-width": 2});
         return paperElement;
     };
+    
+	 
     this.convertGrilleToCardinal = function (objGrille) {
         var new_cell = null;
         try {
@@ -117,7 +117,7 @@ function oRBoard(width, height) {
                 try {
                     f(data, _robot, _cell);
                     if (data.state == "INCOMPLETE") {
-
+		    console.log("incomplete");
                     } else if (data.state == "SUCCESS") {
                         $('#indic').html("SUCCES !!!!");
                         _this.play.succes = true;

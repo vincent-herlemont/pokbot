@@ -20,8 +20,10 @@
 #partie {
 }
 #partieRaphael{
-    width:auto;
-    height: auto;
+    width: 80%;
+    height: 80%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 .ciblegreen{
     background: url('images/greenTarget.jpg');

@@ -1,30 +1,46 @@
-            td{
-                width:20px;
-                height:20px;
-                
-            }
-		    .g{
-		        border-left:1px solid black;
-		    }
-		    .b{
-		        border-bottom:1px solid black;
-		    }
-		    .h{
-		        border-top:1px solid black;
-		    }
-		    .d{
-		        border-right:1px solid black;
-		       
-		    }
-
 #partie {
 }
 #partieRaphael{
     width: 80%;
-    height: 80%;
-    max-width: 900px;
+    height: auto;
+    max-width: 800px;
     margin: 0 auto;
+    max-height: 800px;
 }
+
+#lesParties li{
+    background-color: grey;
+    color: white;
+    display: block;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: 150px;
+    border: 6px solid #f6f6f6;
+    text-align: center;
+    width: 100px;
+    border-radius: 150px;
+    transition: all 300ms linear;
+    float: left;
+    margin: 20px;
+}
+#lesParties li:hover{
+    border-color: #333;
+    transform: scale(1.1);
+}
+#lesParties li:hover .subText{
+      color: #000;
+}
+
+#lesParties li .name{
+  padding-top: 20px;
+  font-weight: bold;
+  display: block;
+}
+#lesParties li .subText{
+  display: block;
+  padding-top: 15px;
+}
+  
 .ciblegreen{
     background: url('images/greenTarget.jpg');
 }

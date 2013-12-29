@@ -7,7 +7,8 @@ function init() {
 		 for(p in data.gamesList) {
 			 var li = document.createElement('li'); 
 			 ul.appendChild( li );
-			 li.appendChild( document.createTextNode( data.gamesList[p] ) );
+			 $(li).append('<span class="name">'+ data.gamesList[p] + '</span>' );
+			 $(li).append('<span class="subText"> rejoindre </span> ');
 			}
 		}
 	);

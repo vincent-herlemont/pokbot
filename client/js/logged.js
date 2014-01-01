@@ -21,14 +21,15 @@ function oRBoard(width, height) {
 
     this.play = {}
     this.play.succes = false;
-
+    this.nbCoups = 0;
+    this.time = 0;
     //ObjetPaper
     this.paperSt = {};
     this.paperSt.cells = paper.set(); // references memoires ne pas s'en servir
     this.paperSt.walls = paper.set(); // references memoires ne pas s'en servir
     this.paperObj = {};
     this.paperObj.target = null;
-
+  
     //Caractéritique cellules
     this.cellSize = {};
     this.cellSize.width = 0;
@@ -119,8 +120,14 @@ function oRBoard(width, height) {
                 try {
                     f(data, _robot, _cell);
                     if (data.state == "INCOMPLETE") {
+		      if(_this.oJsonProposition[_this.oJsonProposition.length-1].command == "move"){
+			_this.nbCoups++;
+			$(".nbCoups span").text(_this.nbCoups);
+		      }
 		    console.log("incomplete");
                     } else if (data.state == "SUCCESS") {
+		      	 _this.nbCoups++;
+		      $(".nbCoups span").text(_this.nbCoups);
                         $('#indic').show();
                         _this.play.succes = true;
                     } else {
@@ -282,6 +289,21 @@ function oRBoard(width, height) {
             _this.st[stElement.pokBot.y][x].cell.attr({"fill": color});
         }
     }
+    this.initCount = function(){
+      _this.time = 0; // uptime in seconds
+      var timer = setInterval(
+	  function() {
+	    if(! _this.play.succes){
+		_this.time++;
+		$(".temps span").text(_this.time + 's');
+	    }else{
+	      clearInterval(timer);
+	    }
+	  }, 1000
+      );
+      $(".nbCoups span").text(0);
+      _this.nbCoups = 0;
+    }
     this.createMoveCross = function (stElement, color, colorEnd) {
         var lastx1 = "";
         var lasty1 = "";
@@ -343,6 +365,7 @@ function oRBoard(width, height) {
         _this.createBoard(grille.board, function () {
                 _this.createTarget(grille.target);
                 _this.createRobots(grille.robots);
+		_this.initCount();
             }
         );
     });

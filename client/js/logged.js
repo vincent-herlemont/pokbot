@@ -90,13 +90,14 @@ function oRBoard(width, height) {
         $.each(robots, function (idRobot, robot) {
 
             var cardinal = _this.convertGrilleToCardinal(robot);
-            _this.paperSt.robots.push(paper.rect(cardinal.x, cardinal.y, (_this.cellSize.width), (_this.cellSize.width)));
-
+	    var src = "images/robot" + robot.color +".svg";
+            _this.paperSt.robots.push(paper.image(src, cardinal.x, cardinal.y, (_this.cellSize.width), (_this.cellSize.width)));
             _this.paperSt.robots[idRobot].pokBot = {};
             _this.paperSt.robots[idRobot].pokBot.x = robot.column;
             _this.paperSt.robots[idRobot].pokBot.y = robot.line;
             _this.paperSt.robots[idRobot].pokBot.y.type = "target";
             _this.paperSt.robots[idRobot].attr({"fill": robot.color});
+	    
 
         });
         _this.paperSt.robots.attr({"stroke": "#ddd"});

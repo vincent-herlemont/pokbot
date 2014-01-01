@@ -10,13 +10,11 @@ function oRBoard(width, height) {
     console.log(taillePlateau);
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
       
-      var svg = document.querySelector("svg");
-     // svg.removeAttribute("width");
-      //svg.removeAttribute("height");
+
       
-      paper.setViewBox(0,0,800,800,true);
-          paper.setSize('100%', '100%');
-   //   paper.canvas.setAttribute('preserveAspectRatio', 'xMidYMid meet');
+     paper.setViewBox(0,0,800,800,true);
+     paper.setSize('100%', '100%');
+     paper.canvas.setAttribute('preserveAspectRatio', 'xMinYMin');
      
     //matric*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
     this.st = []; // Matrice : grille avec des pointeurs. this.st[1][1].cell = cellule this.st[1][1].g = bordure gauche

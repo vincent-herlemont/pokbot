@@ -61,6 +61,28 @@ section, footer{
   padding: 10px;
   width: 100%;
 }
+.joueurs{
+  width: 35%;
+  float:left;
+}
+
+.infos{
+  width: 35%;
+  float:left;
+  margin-left: 15px;
+}
+
+#indic{
+ background: none repeat scroll 0 0 #1ABC9C;
+    display: none;
+    height: 21px;
+    margin: 10px auto;
+    padding: 10px;
+    text-align: center;
+    width: 50%;
+    border-radius: 5px;
+}
+
 #partieRaphael{
     width: 80%;
     height: auto;
@@ -160,15 +182,18 @@ input:focus{
 .cibleblue{
     background: blue;
 }
-.robotblue{
-    background: blue;
-}
-.robotgreen{
-    background: green;
-}
-.robotred{
-    background: red;
-}
-.robotyellow{
-    background: yellow;
+
+@media screen and (max-width: 500px){
+  h1{
+    font-size: 32px;
+  }
+  header img{
+      float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 27px;
+  }
+  h2{
+    margin-top: 85px;
+  }
 }

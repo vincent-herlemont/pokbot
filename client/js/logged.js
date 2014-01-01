@@ -120,7 +120,7 @@ function oRBoard(width, height) {
                     if (data.state == "INCOMPLETE") {
 		    console.log("incomplete");
                     } else if (data.state == "SUCCESS") {
-                        $('#indic').html("SUCCES !!!!");
+                        $('#indic').show();
                         _this.play.succes = true;
                     } else {
                         _this.oJsonProposition.pop();

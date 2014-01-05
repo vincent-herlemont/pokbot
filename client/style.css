@@ -84,7 +84,19 @@ section, footer{
     width: 50%;
     border-radius: 5px;
 }
-
+#error{
+  width: 50%;
+  height: auto;
+  padding: 10px;
+  margin-top: 40px;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  display: none;
+  left: 25%;
+  background-color: #be0a26;
+  text-align: center;
+} 
 #partieRaphael{
     width: 80%;
     height: auto;

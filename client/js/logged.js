@@ -131,10 +131,12 @@ function oRBoard(width, height) {
                         $('#indic').show();
                         _this.play.succes = true;
                     } else if(data.state == "INVALID_MOVE"){
-			console.log("Ce mouvement n'est pas permis !");
+			$("#error").text("Ce mouvement n'est pas permis !");
+		        $("#error").fadeIn().delay(700).fadeOut();
                         _this.oJsonProposition.pop();
                     } else if(data.state == "INVALID_SELECT"){
-		      console.log("Ce robot a déja été déplacé !");
+		      $("#error").text("Ce robot a déja été déplacé !");
+		      $("#error").fadeIn().delay(700).fadeOut();
 		       _this.oJsonProposition.pop();
 		    }
                 } catch (err) {

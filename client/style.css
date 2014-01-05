@@ -7,6 +7,7 @@ src: url("Mopster-Regular.otf") format("opentype");
 }
 html{
   margin: 0;
+  overflow-x: hidden;
   padding: 0;
 }
 h1{
@@ -34,6 +35,8 @@ h1.logged{
 }
 h2{
   color: grey;
+  margin-top: -4px;
+  margin-bottom: 50px;
   font-size: 16px;
 }
 body{
@@ -46,7 +49,6 @@ header{
  background: none repeat scroll 0 0 #35384A;
     border-bottom: 1px solid grey;
     height: 136px;
-    margin: 0 0 60px;
     padding: 10px;
 }
 footer{
@@ -59,7 +61,6 @@ footer{
 section, footer{
   background: white;
   padding: 10px;
-  width: 100%;
 }
 .joueurs{
   width: 35%;
@@ -184,17 +185,32 @@ input:focus{
     background: blue;
 }
 
+
 @media screen and (max-width: 500px){
   h1{
     font-size: 32px;
   }
   header img{
       float: left;
+      width: 150px;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 27px;
   }
-  h2{
-    margin-top: 85px;
+  label{
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+}
+@media screen and (max-width: 330px){
+  header img{
+    width: 40%;
+  }
+  #lesParties{
+    padding-left: 0;
+  }
+  #lesParties li{
+    margin: 0
   }
 }

@@ -130,9 +130,13 @@ function oRBoard(width, height) {
 		      $(".nbCoups span").text(_this.nbCoups);
                         $('#indic').show();
                         _this.play.succes = true;
-                    } else {
+                    } else if(data.state == "INVALID_MOVE"){
+			console.log("Ce mouvement n'est pas permis !");
                         _this.oJsonProposition.pop();
-                    }
+                    } else if(data.state == "INVALID_SELECT"){
+		      console.log("Ce robot a déja été déplacé !");
+		       _this.oJsonProposition.pop();
+		    }
                 } catch (err) {
                 }
             });

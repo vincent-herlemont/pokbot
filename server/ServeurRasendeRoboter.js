@@ -193,7 +193,11 @@ var _server = {
                     }
                 }
                 _server.fs.readFile(_server.pathClientPokbot + './logged.xhtml',
-                    function (err, data) {
+                  function (err, data) {
+                        var tabletEnabled = false;
+                        if(_server.games.list[req.body.idGame].participants[req.body.login].sockets.length>0){
+                            tabletEnabled = true;
+                        }
                         if (err) {
                             res.writeHead(500);
                             return res.end('Error loading logged.xhtml');
@@ -204,9 +208,16 @@ var _server = {
                         if (_server.games.list[req.body.idGame].Terminated) {
                             state += ' est terminée';
                         }
+                        var tablet;
+                        if(tabletEnabled){
+                            tablet="true";
+                        }else{
+                            tablet="false";
+                        }
                         res.write(data.toString().replace(/__LOGIN__/g, req.body.login)
                             .replace(/__IDGAME__/g, title)
                             .replace(/__STATE__/g, state)
+                            .replace(/__TABLET__/g, tablet)
                         );
                         res.end();
                     });

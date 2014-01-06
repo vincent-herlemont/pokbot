@@ -1,0 +1,24 @@
+.bYellow{
+	background-color: yellow;
+}
+
+.bRed{
+	background-color:red;
+}
+
+.bGreen{
+	background-color:green;
+}
+
+.bBlue{
+	background-color:blue;
+}
+
+.disabled{
+	opacity:0.4;
+	filter:alpha(opacity=40); /* For IE8 and earlier */
+}
+	.disabled a{
+		cursor: default;
+		pointer-events: none;
+	}

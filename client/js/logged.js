@@ -6,7 +6,9 @@ $().ready(function () {
     _login = document.getElementById('login').value;
     _idGame = document.getElementById('idGame').value;
     _play.succes = false;
-
+    _play.firstWinner = true;
+    _play.finish = false;
+    _play.timeLeft = 0;
 });
 
 function oRBoard(width, height) {
@@ -127,10 +129,11 @@ function oRBoard(width, height) {
 		      }
 		    console.log("incomplete");
                     } else if (data.state == "SUCCESS") {
-		      	 _this.nbCoups++;
-		      $(".nbCoups span").text(_this.nbCoups);
+		       _play.succes = true;
+		       _this.nbCoups++;
+		        $('#indic').text("Bravo ! Vous avez trouvé !");
                         $('#indic').show();
-                        _play.succes = true;
+			
                     } else if(data.state == "INVALID_MOVE"){
 			$("#error").text("Ce mouvement n'est pas permis !");
 		        $("#error").fadeIn().delay(700).fadeOut();
@@ -311,6 +314,7 @@ function oRBoard(width, height) {
       $(".nbCoups span").text(0);
       _this.nbCoups = 0;
     }
+    
     this.createMoveCross = function (stElement, color, colorEnd) {
         var lastx1 = "";
         var lasty1 = "";
@@ -382,19 +386,30 @@ $(document).ready(function () {
 });
 
 function displayFinish(data){
+  _play.finish = true;
   if(!_play.succes){
-    //$("#indic").text("il vous reste :" + data);
     alert("cest terminé vous avez perdu !");
-  }else{
-    alert("cest terminé vous avez gagné !");
+    $("#indic").hide();
   }
 }
 
+function initDecount(){
+      _play.timeLeft = 60; // uptime in seconds
+      var timer = setInterval(
+	  function() {
+	    if(! _play.finish){
+		_play.timeLeft--;
+		$("#indic span").text(_play.timeLeft);
+	    }else{
+	      clearInterval(timer);
+	    }
+	  }, 1000
+      );
+}
+    
 function displayResult(data){
       //$("#indic").text("il vous reste :" + data);
-    if(!_play.succes){
 	$.each(data, function (idData, result){
-	  $("#indic").text("");
 	    var joueurGagnant = result.player;
 	    var nbCoups = 0;
 	    $.each(result.proposition, function (idprop, prop){
@@ -402,11 +417,16 @@ function displayResult(data){
 		nbCoups++;
 	      }
 	  });
-	  $("#indic").append("Le joueur  : " + joueurGagnant + " a trouvé en " + nbCoups + " coups.");
-	  $("#indic").append(" Il vous reste 60 secondes ! ");
+	 $('#lesParticipants li:contains(' + joueurGagnant +')').text(joueurGagnant + " a trouvé en " + nbCoups + " coups") ;
 	});
-	$("#indic").fadeIn();
-      }
+	if((! _play.succes) && _play.firstWinner){
+	  $("#indic").text("");
+	   initDecount();
+	  initDecount
+	  $("#indic").append(" Il vous reste <span class='decount'>" + _play.timeLeft + "</span> secondes ! ");
+	  $("#indic").fadeIn();
+	  _play.firstWinner = false;
+	}
 }
 
 function init() {
@@ -428,8 +448,7 @@ function init() {
         console.log("FinalCountDown : " + ms);
     });
     socket.on('TerminateGame', function (data) {
-        h2 = document.querySelector('body > h2');
-        h2.innerHTML += ' est terminée !';
+        $('.logged').append("est terminée !");
 	displayFinish(data);
     });
     socket.on('solutions', function (data) {

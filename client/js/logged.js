@@ -1,17 +1,19 @@
 taillePlateau = 10;
 var _login, _idGame;
+var _play = {}
+
 $().ready(function () {
     _login = document.getElementById('login').value;
     _idGame = document.getElementById('idGame').value;
+    _play.succes = false;
+
 });
 
 function oRBoard(width, height) {
     var _this = this;
     console.log(taillePlateau);
     var paper = new Raphael(document.getElementById('partieRaphael'), width, height);
-      
-
-      
+     
      paper.setViewBox(0,0,800,800,true);
      paper.setSize('100%', '100%');
      paper.canvas.setAttribute('preserveAspectRatio', 'xMinYMin');
@@ -19,8 +21,7 @@ function oRBoard(width, height) {
     //matric*DoubleTab : [ligne][colum]{"g,b,h,d,cell"}
     this.st = []; // Matrice : grille avec des pointeurs. this.st[1][1].cell = cellule this.st[1][1].g = bordure gauche
 
-    this.play = {}
-    this.play.succes = false;
+    _play.succes = false;
     this.nbCoups = 0;
     this.time = 0;
     //ObjetPaper
@@ -115,7 +116,7 @@ function oRBoard(width, height) {
         }
     };
     this.sendPropositon = function (f, _robot, _cell) {
-        if (_this.play.succes == false) {
+        if (_play.succes == false) {
             $.post("proposition", _this.oJsonSendProposition, function (data) {
                 try {
                     f(data, _robot, _cell);
@@ -129,7 +130,7 @@ function oRBoard(width, height) {
 		      	 _this.nbCoups++;
 		      $(".nbCoups span").text(_this.nbCoups);
                         $('#indic').show();
-                        _this.play.succes = true;
+                        _play.succes = true;
                     } else if(data.state == "INVALID_MOVE"){
 			$("#error").text("Ce mouvement n'est pas permis !");
 		        $("#error").fadeIn().delay(700).fadeOut();
@@ -299,7 +300,7 @@ function oRBoard(width, height) {
       _this.time = 0; // uptime in seconds
       var timer = setInterval(
 	  function() {
-	    if(! _this.play.succes){
+	    if(! _play.succes){
 		_this.time++;
 		$(".temps span").text(_this.time + 's');
 	    }else{
@@ -380,10 +381,38 @@ $(document).ready(function () {
     oRBoard = new oRBoard(800, 800);
 });
 
+function displayFinish(data){
+  if(!_play.succes){
+    //$("#indic").text("il vous reste :" + data);
+    alert("cest terminé vous avez perdu !");
+  }else{
+    alert("cest terminé vous avez gagné !");
+  }
+}
+
+function displayResult(data){
+      //$("#indic").text("il vous reste :" + data);
+    if(!_play.succes){
+	$.each(data, function (idData, result){
+	  $("#indic").text("");
+	    var joueurGagnant = result.player;
+	    var nbCoups = 0;
+	    $.each(result.proposition, function (idprop, prop){
+	      if(prop.command == "move"){
+		nbCoups++;
+	      }
+	  });
+	  $("#indic").append("Le joueur  : " + joueurGagnant + " a trouvé en " + nbCoups + " coups.");
+	  $("#indic").append(" Il vous reste 60 secondes ! ");
+	});
+	$("#indic").fadeIn();
+      }
+}
 
 function init() {
     // Connect to the SocketIO server to retrieve ongoing games.
     socket = io.connect();
+    var _this = this;
     socket.on('participants', function (data) {
         var ul = document.getElementById('lesParticipants');
         ul.innerHTML = '';
@@ -399,11 +428,13 @@ function init() {
         console.log("FinalCountDown : " + ms);
     });
     socket.on('TerminateGame', function (data) {
-        h1 = document.querySelector('body > header > h1');
-        h1.innerHTML += ' est terminée !';
+        h2 = document.querySelector('body > h2');
+        h2.innerHTML += ' est terminée !';
+	displayFinish(data);
     });
     socket.on('solutions', function (data) {
-        console.log("Solutions are :\n" + JSON.stringify(data.solutions));
+        console.log("Solutions are :\n" + JSON.stringify(data));
+	displayResult(data.solutions);
     });
     socket.emit('identification', {
             login: _login,

@@ -20,9 +20,9 @@ h1{
 }
 header img{
   float: left;
-    margin-left: 43px;
-    margin-right: 22px;
-    margin-top: 27px;
+  margin-left: 43px;
+  margin-right: 22px;
+  margin-top: 27px;
 }
 
 h1.logged{
@@ -34,7 +34,7 @@ h1.logged{
   font-size: 30px;
 }
 h2{
-  color: grey;
+  color: gray;
   margin-top: -4px;
   margin-bottom: 50px;
   font-size: 16px;
@@ -47,12 +47,12 @@ body{
 }
 header{
  background: none repeat scroll 0 0 #35384A;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid gray;
     height: 136px;
     padding: 10px;
 }
 footer{
-  border-top: 1px solid grey;
+  border-top: 1px solid gray;
   width: 100%;
   margin-top: 50px;
   height: 50px;
@@ -98,11 +98,11 @@ section, footer{
   text-align: center;
 } 
 #partieRaphael{
-    width: 80%;
-    height: auto;
-    max-width: 800px;
-    margin: 0 auto;
-    max-height: 800px;
+  width: 80%;
+  height: auto;
+  max-width: 800px;
+  margin: 0 auto;
+  max-height: 800px;
 }
 label{
  display: inline-block; 
@@ -150,7 +150,7 @@ input:focus{
 }
 
 #lesParties li{
-    background-color: grey;
+    background-color: gray;
     color: white;
     display: block;
     cursor:  pointer;

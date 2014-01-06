@@ -1,3 +1,4 @@
+var socket = null;
 function init() {
 	// Connect to the SocketIO server to retrieve ongoing games.
 	socket = io.connect();
@@ -13,8 +14,8 @@ function init() {
 		}
 	);
 	socket.emit('loginPage');
-	  	$("#lesParties").on("click", "li", function(){
+	  $("#lesParties").on("click", "li", function(){
 	  $("#idGame").val($(this).children('.name').text());
-	   $( "#nouvellePartie" ).submit();
+	  $( "#nouvellePartie" ).submit();
 	});
 }

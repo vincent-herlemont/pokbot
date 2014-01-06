@@ -1,46 +1,51 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
 	<head>
 		<title>Robot control</title>
-		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="css/robot-control.css">
-		<link rel="stylesheet" type="text/css" href="css/colors.css">
-	</head>
+		<link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'/>
+		<link rel="stylesheet" type="text/css" href="css/robot-control.css"/>
+		<link rel="stylesheet" type="text/css" href="css/colors.css"/>
+		<script src="/socket.io/socket.io.js"></script>
+     	<script src="lib/jquery/js/jquery-1.10.2.js"></script>
+		<script src="js/robot-control.js"></script>
+	</head> 
 	<body>
+		<input id="login" type="hidden" value="__LOGIN__"/>
+    	<input id="idGame" type="hidden" value="__IDGAME__"/>
 		<div id="robotList">
 			<div class="robot disabled">
 				<div class="robotBlock bBlue"><img src="images/robotblue.svg"/></div>
 				<div class="robotDirection">
-					<a href=""><img src="images/top.png"/></a>
-					<a href=""><img src="images/right.png"/></a>
-					<a href=""><img src="images/bottom.png"/></a>
-					<a href=""><img src="images/left.png"/></a>
+					<img id="arrow-blue-top" src="images/top.png"/>
+					<img id="arrow-blue-right" src="images/right.png"/>
+					<img id="arrow-blue-bottom" src="images/bottom.png"/>
+					<img id="arrow-blue-left" src="images/left.png"/>
 				</div>
 			</div>
 			<div class="robot">
 				<div class="robotBlock bRed"><img src="images/robotred.svg"/></div>
 				<div class="robotDirection">
-					<a href=""><img src="images/top.png"/></a>
-					<a href=""><img src="images/right.png"/></a>
-					<a href=""><img src="images/bottom.png"/></a>
-					<a href=""><img src="images/left.png"/></a>
+					<img id="arrow-red-top" src="images/top.png"/>
+					<img id="arrow-red-right" src="images/right.png"/>
+					<img id="arrow-red-bottom" src="images/bottom.png"/>
+					<img id="arrow-red-left" src="images/left.png"/>
 				</div>
 			</div>
 			<div class="robot">
 				<div class="robotBlock bGreen"><img src="images/robotgreen.svg"/></div>
 				<div class="robotDirection">
-					<a href=""><img src="images/top.png"/></a>
-					<a href=""><img src="images/right.png"/></a>
-					<a href=""><img src="images/bottom.png"/></a>
-					<a href=""><img src="images/left.png"/></a>
+					<img id="arrow-green-top" src="images/top.png"/>
+					<img id="arrow-green-right" src="images/right.png"/>
+					<img id="arrow-green-bottom" src="images/bottom.png"/>
+					<img id="arrow-green-left" src="images/left.png"/>
 				</div>
 			</div>
 			<div class="robot">
 				<div class="robotBlock bYellow"><img src="images/robotyellow.svg"/></div>
 				<div class="robotDirection">
-					<a href=""><img src="images/top.png"/></a>
-					<a href=""><img src="images/right.png"/></a>
-					<a href=""><img src="images/bottom.png"/></a>
-					<a href=""><img src="images/left.png"/></a>
+					<img id="arrow-yellow-top" src="images/top.png"/>
+					<img id="arrow-yellow-right" src="images/right.png"/>
+					<img id="arrow-yellow-bottom" src="images/bottom.png"/>
+					<img id="arrow-yellow-left" src="images/left.png"/>
 				</div>
 			</div>
 		</div>

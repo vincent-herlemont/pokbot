@@ -4,7 +4,7 @@ var _server = {
     fs: require('fs'), express: require('express'), app: null, io: require('socket.io'),
     games: { list: {}, ProcessProposition: function (idGame, playerName, proposition) {
         if (this.list[idGame] == undefined) {
-            throw new Error('NO_SUCH_GAME_ID (games)');
+            throw new Error('NO_SUCH_GAME_ID');
         }
         if (this.list[idGame].participants[playerName] == undefined) {
             throw new Error('PLAYER_IS_NOT_PRESENT');
@@ -32,13 +32,13 @@ var _server = {
         _server.sendGamesInfo();
     }, close: function (id) {//console.log('Closing game ' + id);
         if (this.list[id] == undefined) {
-            throw new Error('NO_SUCH_GAME_ID (close)');
+            throw new Error('NO_SUCH_GAME_ID');
         }
         delete this.list[id];
         _server.sendGamesInfo();
     }, joining: function (idGame, playerName) {
         if (this.list[idGame] == undefined) {
-            throw new Error('NO_SUCH_GAME_ID (joining)');
+            throw new Error('NO_SUCH_GAME_ID');
         }
         if (this.list[idGame].participants[playerName] == undefined) {
             //console.log("\tParticipant " + playerName + ' is joining game ' + idGame);
@@ -46,7 +46,7 @@ var _server = {
         }
     }, leaving: function (idGame, playerName) {
         if (this.list[idGame] == undefined) {
-            throw new Error('NO_SUCH_GAME_ID (leaving)');
+            throw new Error('NO_SUCH_GAME_ID');
         }
         if (this.list[idGame].participants[playerName] == undefined) {
             throw new Error('PLAYER_IS_NOT_PRESENT');

@@ -1,4 +1,5 @@
 var rasendeRoboter = require("./RasendeRoboter");
+var users_soIO = {}
 var _server = {
     pathClientPokbot: __dirname + "/../client/",
     fs: require('fs'), express: require('express'), app: null, io: require('socket.io'),
@@ -115,7 +116,9 @@ var _server = {
         this.emit(idGame, 'FinalCountDown', {FinalCountDown: ms});
         this.OtherFinalProposition(idGame, playerName, proposition);
         setTimeout(function () {
-                _server.games.TerminateGame(idGame);
+                if (idGame != undefined) {
+                    _server.games.TerminateGame(idGame);
+                }
             }
             , ms);
     }, OtherFinalProposition: function (idGame, playerName, proposition) {
@@ -193,7 +196,7 @@ var _server = {
                     }
                 }
                 var tabletEnabled = false;
-                if(_server.games.list[req.body.idGame].participants[req.body.login].sockets.length>0){
+                if(_server.games.list[req.body.idGame].participants[req.body.login].sockets.length%2 != 0){
                     tabletEnabled = true;
                     _server.fs.readFile(_server.pathClientPokbot + './robot-control.html',
                     function (err, data) {
@@ -317,6 +320,7 @@ var _server = {
          });*/
 
         this.io.on('connection', function (socket) {
+
                 socket.on('loginPage'
                     , function (data) {
                         //console.log("Someone is connected on the loggin page...");
@@ -327,6 +331,10 @@ var _server = {
                     , function (data) {
                         // console.log('Received identification ' + JSON.stringify(data));
                         _server.games.identification(data.idGame, data.login, socket);
+                        if(data.plateau != undefined){
+                            console.log("Ajout cannal plateau : "+data.idGame+"/"+data.login);
+                            users_soIO[data.idGame+data.login] = socket;
+                        }
                     }
                 );
                 socket.on('disconnect'
@@ -334,9 +342,13 @@ var _server = {
                         _server.disconnect(socket);
                     }
                 );
-                socket.on('message'
-                    , function (data) {
-                        console.log(data);
+                socket.on('ordreMobile'
+                    , function (obj) {
+                        if(users_soIO[obj.idGame+obj.login]!=undefined){
+                            console.log("Send ordreMobile");
+                            users_soIO[obj.idGame+obj.login].emit("ordreMobileServeur",obj);
+                        }
+                        console.log(obj);
                     }
                 );
             }

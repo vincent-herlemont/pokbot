@@ -12,11 +12,27 @@ function init(){
             idGame: _idGame
         }
     );
+    socket.on('ordreMobileServeur', function (data) {
+        console.log("OrdreMobile are :\n" + JSON.stringify(data));
+    });
 }
 $( document ).ready(function() {
+    $( ".robotBlock img" ).on( "click", function() {
+        socket.emit('ordreMobile',{
+            login:_login,
+            idGame:_idGame,
+            action:"move",
+            robot:$(this).attr("id")});
+    });
+
 	$( ".robotDirection img" ).on( "click", function() {
 		if(socket!=null){
-			socket.emit('message',{data:$(this).attr("id")})
+			socket.emit('ordreMobile',{
+                login:_login,
+                idGame:_idGame,
+                action:"select",
+                data:$(this).attr("id")
+            })
 		}
 	});
 });

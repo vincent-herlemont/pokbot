@@ -10,7 +10,8 @@
     <script src="lib/jquery/js/cookies-0.3.1.js"></script>
     <script src="lib/raphael/js/raphael.js"></script>
     <script src="js/logged.js"></script>
-        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans"/>
+     <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans"/>
+    <link href='http://fonts.googleapis.com/css?family=Special+Elite' rel='stylesheet' type='text/css'/>
     <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
 <body onload="init()">
@@ -23,15 +24,15 @@
 <section>
     <h2 class="logged">Partie <span class="nameP"> __IDGAME__ </span> __STATE__</h2>
 
-    <p>Vous êtes connecté en tant que __LOGIN__</p>
+    <p id="identificationP">Vous êtes connecté en tant que <span class='blueLabel'>__LOGIN__</span></p>
 
     <div class="joueurs">
-        <p> Joueurs </p>
+        <p class="blueLabel" style="margin-bottom:5px;"> Participants </p>
         <ul id="lesParticipants"/>
     </div>
     <div class="infos">
-        <p class="temps"> Temps : <span></span></p>
-        <p class="nbCoups"> Nombre de coups : <span></span></p>
+        <p class="temps blueLabel"> Temps : <span></span></p>
+        <p class="nbCoups blueLabel"> Nombre de coups : <span></span></p>
         </div>
          <div id="indic"></div>
         <div id="error">Ce robot a déja été déplacé </div>

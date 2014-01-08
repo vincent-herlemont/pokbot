@@ -151,6 +151,9 @@ input{
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     vertical-align: middle;
 }
+#login{
+  margin-left: 3px;
+}
 input:focus{
       border: 1px solid #1ABC9C;
 
@@ -220,19 +223,6 @@ input:focus{
   font-weight: bold;
 }
 
-.ciblegreen{
-    background: url('images/greenTarget.jpg');
-}
-.ciblered{
-    background: red;
-}
-.cibleyellow{
-    background: yellow;
-}
-.cibleblue{
-    background: blue;
-}
-
 
 @media screen and (max-width: 500px){
   h1{
@@ -248,6 +238,7 @@ input:focus{
   label{
     display: block;
     width: 100%;
+    padding: 5px;
     text-align: left;
   }
 }

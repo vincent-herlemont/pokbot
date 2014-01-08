@@ -57,6 +57,8 @@ footer{
   margin-top:0px; 
   height: 50px;
   clear: both;
+  font-family: 'Century Gothic', Helvetica, sans-serif;
+
 }
 section, footer{
   background: white;
@@ -177,7 +179,8 @@ input:focus{
 
 #lesParties li .name{
   padding-top: 30px;
-  font-family: Mopster;
+  font-family: 'Special Elite', cursive;
+  text-transform: uppercase;
   font-size: 25px;
   display: block;
 }
@@ -231,6 +234,7 @@ input:focus{
   }
   #lesParties{
     padding-left: 0px;
+
   }
   #lesParties li{
     margin: 0

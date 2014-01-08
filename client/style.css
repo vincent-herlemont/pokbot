@@ -54,7 +54,7 @@ header{
 footer{
   border-top: 1px solid gray;
   width: 100%;
-  margin-top: 50px;
+  margin-top:0px; 
   height: 50px;
   clear: both;
 }
@@ -107,9 +107,9 @@ section, footer{
 label{
  display: inline-block; 
  max-width: 350px; 
- width: 40%;
- text-align: right; 
- padding: 10px;
+ width: 15%;
+ text-align: left; 
+ padding-left: 200px;
 }
 input{
     background-color: #FFFFFF;
@@ -119,6 +119,7 @@ input{
     color: #555555;
     width: 200px;
     font-size: 14px;
+    margin-right:20px;
     margin-bottom: 5px;
     height: 28px;
     padding: 6px 12px;
@@ -164,6 +165,7 @@ input:focus{
     transition: all 300ms linear;
     float: left;
     margin: 20px;
+    margin-left: 50px;
 }
 #lesParties li:hover{
     border-color: #333;
@@ -182,6 +184,14 @@ input:focus{
 #lesParties li .subText{
   display: block;
   padding-top: 15px;
+}
+
+#lesParties_label{
+  display:block;
+  padding-left:4.7%;
+  margin:20px;
+  color:#459CE4;
+  font-weight: bold;
 }
 
 .ciblegreen{
@@ -220,7 +230,7 @@ input:focus{
     width: 40%;
   }
   #lesParties{
-    padding-left: 0;
+    padding-left: 0px;
   }
   #lesParties li{
     margin: 0

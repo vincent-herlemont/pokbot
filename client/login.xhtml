@@ -23,17 +23,18 @@
     <h2>Bienvenue sur Rasende Roboter, le jeu de robots ricochets en ligne</h2>
         <form method="post" action="" id="nouvellePartie">   
         <div class="name">
-            <label for="login">Entrez votre nom : </label><input required="required" type="text" name="login" id="login"/>
+            <label for="login">Votre pseudo </label><input required="required" type="text" name="login" id="login"/>
         </div>
             <div class="game">
-                <label for="idGame">Entrez un nom pour la nouvelle partie : </label>
+                <label for="idGame">Nom de partie</label>
                 <input type="text" name="idGame" id="idGame"/>
-                <input class="goGame" type="submit" value="Nouveau jeu !"/>  <span class="join"> ou rejoignez une partie existante : </span>
+                <input class="goGame" type="submit" value="Créer partie"/>  <span class="join"> </span>
             </div>
         </form>
         <nav>
-        <ul id="lesParties"/>
-    </nav>
+        	<p id="lesParties_label">Parties en cours</p>
+        	<ul id="lesParties"/>
+    	</nav>
     <section id="detailPartie">
 
     </section>

@@ -4,41 +4,48 @@ body{
 
 #robotList{
 	padding:10px;
-	display: -webkit-flex;
-	display: flex;
-	-webkit-align-items: center;
-	align-items: center;
-	-webkit-justify-content: center;
-	justify-content: center;
-	-webkit-flex-flow: column wrap;
-	flex-flow: column wrap;
-	-webkit-align-content: center;
-	align-content: center;
+	 margin: 0 auto;
+    width: 70%;
+	display: block
  }
 
-	#robotList .robot{
-	   display: -webkit-flex;
-	   display: flex;
-	   -webkit-flex-direction: row;
-	   flex-direction: row;
-	   margin-bottom: 10px;
+#robotList .robot{
+  display: block;
+  padding:10px;
 	}
 
-	#robotList .robot div{
-		border: 1px solid black;
-		padding:10px;
-	}
-		#robotList .robotBlock, #robotList .robotBlock img{
-			width:30px;
-			cursor: pointer;
-		}
+#robotList .robotBlock, #robotList .robotDirection{
+  width: auto;
+  padding:10px;
+  display: inline-block;
+}
 
-		#robotList .robot .robotName{
-			font-size: 20px;
-		}
-		#robotList .robot .robotDirection img{
-			width:30px;
-			height:30px;
-			cursor: pointer;
-			margin-right:10px;
-		}
+#robotList .robotBlock{
+  margin-left: 25%;
+}
+#robotList .robotDirection{
+    border: 1px solid gray;
+
+}
+#robotList .robotBlock img{
+	width: 40px;
+	cursor: pointer;
+}
+		
+#robotList .robot .robotName{
+  font-size: 20px;
+}
+#robotList .robot .robotDirection img{
+  cursor: pointer;
+    height: 31px;
+    margin-bottom: 5px;
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 30px;
+}
+
+@media screen and (max-width: 330px){
+  #robotList {
+        width: 100%;
+  }
+}

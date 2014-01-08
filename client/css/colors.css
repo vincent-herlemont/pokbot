@@ -1,21 +1,32 @@
 .bYellow{
-	background-color: yellow;
+	background-color: #fffbb3;
 }
 
 .bRed{
-	background-color:red;
+	background-color: #ff6c6c;
 }
 
 .bGreen{
-	background-color:green;
+	background-color: #cef48c;
 }
 
 .bBlue{
-	background-color:blue;
+	background-color: #c4ecf6;
 }
-
+.bBlue .active{
+  background-color: #49c9ff;
+}
+.bYellow .active{
+  background-color: #fff555;
+}
+.bRed .active{
+  background-color : #ff0831;
+}
+.bGreen .active{
+  background-color: #c2ff57;
+}
 .disabled{
-	opacity:0.4;
+	opacity:0.3;
 	filter:alpha(opacity=40); /* For IE8 and earlier */
 }
 	.disabled a{

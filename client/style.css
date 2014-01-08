@@ -30,8 +30,9 @@ h1.logged{
   font-size: 20px;
 }
 .nameP{
-  font-family: Mopster;
   font-size: 30px;
+  font-family: 'Special Elite', cursive;
+  text-transform: uppercase;
 }
 h2{
   color: gray;
@@ -67,6 +68,23 @@ section, footer{
 .joueurs{
   width: 35%;
   float:left;
+  margin-left:20%;
+  margin-bottom:60px;
+}
+
+.blueLabel{
+  font-weight: bold;
+  color:#459CE4;
+}
+
+.blueLabel span{
+  color:#333;
+}
+#lesParticipants{
+  margin-top:5px;
+  list-style: none;
+  padding:0;
+  margin:0;
 }
 
 .infos{
@@ -75,6 +93,11 @@ section, footer{
   margin-left: 15px;
 }
 
+#identificationP{
+  width: 35%;
+  float:left;
+  margin-left:20%;
+}
 #indic{
  background: none repeat scroll 0 0 #1ABC9C;
     display: none;

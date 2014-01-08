@@ -30,6 +30,7 @@ body{
 	}
 		#robotList .robotBlock, #robotList .robotBlock img{
 			width:30px;
+			cursor: pointer;
 		}
 
 		#robotList .robot .robotName{
@@ -38,5 +39,6 @@ body{
 		#robotList .robot .robotDirection img{
 			width:30px;
 			height:30px;
+			cursor: pointer;
 			margin-right:10px;
 		}

@@ -18,6 +18,12 @@ function init(){
 }
 $( document ).ready(function() {
     $( ".robotBlock img" ).on( "click", function() {
+      if(! $(this).hasClass('disabled')){
+	    $(".robotBlock .active").addClass("disabled").removeClass("active");
+	    $(this).removeClass("disabled").addClass('active');
+	    $(".robotDirection").addClass("disabled");
+	  $(this).closest(".robot").find(".robotDirection").removeClass("disabled");
+      }
         socket.emit('ordreMobile',{
             login:_login,
             idGame:_idGame,

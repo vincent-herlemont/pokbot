@@ -107,24 +107,28 @@ section, footer{
 }
 #indic{
  background: none repeat scroll 0 0 #1ABC9C;
-    display: none;
+    border-radius: 5px 5px 5px 5px;
+    clear: both;
     height: auto;
-    margin: 10px auto;
+    margin-left: 25%;
     padding: 10px;
-    clear:both;
+    position: absolute;
     text-align: center;
+    display: none;
     width: 50%;
-    border-radius: 5px;
+    z-index: 2;
 }
 #error{
   width: 50%;
   height: auto;
   padding: 10px;
-  margin-top: 40px;
+  margin-top: 35%;
   position: absolute;
   color: white;
   font-weight: bold;
   display: none;
+  z-index: 2;
+  border-radius: 5px;
   left: 25%;
   background-color: #be0a26;
   text-align: center;
@@ -300,6 +304,7 @@ input:focus{
   }
   #partieRaphael {
     float: left;
+    margin-top: 40px;
   }
   h2.logged{
     margin-left: 0;

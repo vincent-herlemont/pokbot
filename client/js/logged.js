@@ -49,6 +49,9 @@ function oRBoard(width, height) {
         "login": _login,
         "proposition": _this.oJsonProposition
     };
+    
+    this.colorRobotEnCour = "";
+
 
     this.traceWall = function (pathPaper) {
         var paperElement = paper.path(pathPaper);
@@ -181,7 +184,8 @@ function oRBoard(width, height) {
                 if (_this.paperObj.target.pokBot.x == value.c && _this.paperObj.target.pokBot.y == value.l) {
                     _this.paperObj.target.mouseup(_this.proposeMove.handleCells);
                 }
-            })
+            });
+            _this.colorRobotEnCour = robot.attr("fill");
         }, robot);
     }
     this.proposeMove.cells = [];
@@ -283,6 +287,8 @@ function oRBoard(width, height) {
             robot.animate({x: cell.attr("x"), y: cell.attr("y") }, 600, function () {
                     robot.attr({"x": cell.attr("x"), "y": cell.attr("y")});
                     _this.proposeMove.handleCells.lock = false;
+                    //Rapppel de la selection du robot
+                    oRBoard.SYSselectRobot(robot.attr("fill"));
                     _this.proposeMove.unhandle();
                 }
             );
@@ -290,6 +296,8 @@ function oRBoard(width, height) {
             robot.animate({x: cell.attr("cx") - (_this.cellSize.width / 2), y: cell.attr("cy") - (_this.cellSize.height / 2) }, 600, function () {
                     robot.attr({"x": cell.attr("cx") - (_this.cellSize.width / 2), "y": cell.attr("cy") - (_this.cellSize.height / 2)});
                     _this.proposeMove.handleCells.lock = false;
+                    //Rapppel de la selection du robot
+                    oRBoard.SYSselectRobot(robot.attr("fill"));
                     _this.proposeMove.unhandle();
                 }
             );
@@ -547,4 +555,41 @@ function init() {
             plateau: true
         }
     );
+    
+    $(document).keydown(function(e){
+        if (e.keyCode == 37) { 
+           oRBoard.proposeMove.SYShandleCells(oRBoard.colorRobotEnCour,"left");
+           return false;
+        }
+        if (e.keyCode == 38) { 
+           oRBoard.proposeMove.SYShandleCells(oRBoard.colorRobotEnCour,"top");
+           return false;
+        }
+        if (e.keyCode == 39) { 
+           console.log(oRBoard.colorRobotEnCour);
+           oRBoard.proposeMove.SYShandleCells(oRBoard.colorRobotEnCour,"right");
+           return false;
+        }
+        if (e.keyCode == 40) { 
+           oRBoard.proposeMove.SYShandleCells(oRBoard.colorRobotEnCour,"bottom");
+           return false;
+        }
+        if (e.keyCode == 82) { 
+            oRBoard.SYSselectRobot("red");
+            return false;
+        }
+        if (e.keyCode == 71) { 
+            oRBoard.SYSselectRobot("green");
+            return false;
+        }
+        if (e.keyCode == 89) { 
+            oRBoard.SYSselectRobot("yellow");
+            return false;
+        }
+        if (e.keyCode == 66) { 
+            oRBoard.SYSselectRobot("blue");
+            return false;
+        }
+    });
+    
 }

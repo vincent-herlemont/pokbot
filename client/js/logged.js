@@ -9,6 +9,13 @@ $().ready(function () {
     _play.firstWinner = true;
     _play.finish = false;
     _play.timeLeft = 0;
+    $(".help").click(function(){
+      if($("#helpDiv").is(":visible")){
+	$("#helpDiv").fadeOut(150);
+      }else{
+	$("#helpDiv").fadeIn(150);
+      }
+    });
 });
 
 function oRBoard(width, height) {

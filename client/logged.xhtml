@@ -16,12 +16,21 @@
 </head>
 <body onload="init()">
 <header>
-     <img src="images/robot.png" alt="Robot picture" width="150" /> 
-    <h1>POkBOt</h1>
+     <img class="robot" src="images/robot.png" alt="Robot picture" width="150" /> 
+    <h1>POkBOt   <img class="help" src="images/help.png" alt="Help icon" width="40" /></h1>
+  
     <input id="login" type="hidden" value="__LOGIN__"/>
     <input id="idGame" type="hidden" value="__IDGAME__"/>
 </header>
-<section>
+<div id="helpDiv">
+  <h3> Aide </h3>
+  <p class="sec"> Touches clavier</p>
+  <p> Flèches pour déplacer les robots </p>
+  <p> G : robot vert, R : robot rouge, Y : robot jaune, B : robot bleu </p>
+  <p class="sec"> Règles du jeu Rasender Roboter </p>
+  <p>  </p>
+</div>
+<section id="partieInfos">
     <h2 class="logged">Partie <span class="nameP"> __IDGAME__ </span> __STATE__</h2>
 
     <p id="identificationP">Vous êtes connecté en tant que <span class='blueLabel'>__LOGIN__</span></p>
@@ -30,16 +39,18 @@
         <p class="blueLabel" style="margin-bottom:5px;"> Participants </p>
         <ul id="lesParticipants"/>
     </div>
+    
     <div class="infos">
         <p class="temps blueLabel"> Temps : <span></span></p>
         <p class="nbCoups blueLabel"> Nombre de coups : <span></span></p>
         </div>
+        </section>
+        
          <div id="indic"></div>
         <div id="error">Ce robot a déja été déplacé </div>
     <section id="partieRaphael">
 
     </section>
-</section>
 </body>
 
    <script type="text/javascript"> 

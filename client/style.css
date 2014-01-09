@@ -7,7 +7,7 @@ src: url("Mopster-Regular.otf") format("opentype");
 }
 html{
   margin: 0;
-  overflow-x: hidden;
+ /* overflow-x: hidden; */
   padding: 0;
 }
 h1{
@@ -17,11 +17,18 @@ h1{
     margin-bottom: 20px;
     margin-top: 40px;
     padding-top: 20px;
+    margin-left: 200px;
+    margin-right: 43px;
 }
-header img{
+header img.help{
+  display: inline;
+  cursor: pointer;
+  padding-bottom: 3px;
+}
+header img.robot{
   float: left;
-  margin-left: 43px;
-  margin-right: 22px;
+  left: 43px;
+  position: absolute;
   margin-top: 27px;
 }
 
@@ -36,6 +43,7 @@ h1.logged{
 }
 h2{
   color: gray;
+  margin-left: 200px;
   margin-top: -4px;
   margin-bottom: 50px;
   font-size: 16px;
@@ -54,7 +62,6 @@ header{
 }
 footer{
   border-top: 1px solid gray;
-  width: 100%;
   margin-top:0px; 
   height: 50px;
   clear: both;
@@ -125,16 +132,16 @@ section, footer{
 #partieRaphael{
   width: 80%;
   height: auto;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
-  max-height: 800px;
+  max-height: 700px;
 }
 label{
- display: inline-block; 
- max-width: 350px; 
- width: 15%;
- text-align: left; 
- padding-left: 200px;
+   display: inline-block;
+    max-width: 350px;
+    padding-right: 16px;
+    text-align: right;
+    width: 20%;
 }
 input{
     background-color: #FFFFFF;
@@ -177,7 +184,25 @@ input:focus{
 .goGame:hover {
 	background-color: #1baae3;
 }
-
+#helpDiv {
+  display: none;
+  width: 50%;
+  height: auto;
+  background-color: #407885;
+  color: white;
+  margin-left: 25%;
+  padding: 10px;
+  position: absolute;
+  margin-top: -1px;
+  opacity: 0.9;
+  z-index: 2;
+}
+#helpDiv h3{
+  margin: 0 auto;
+}
+#helpDiv .sec {
+  font-weight: bold;
+}
 #lesParties li{
     background-color: gray;
     color: white;
@@ -228,12 +253,20 @@ input:focus{
   h1{
     font-size: 32px;
   }
-  header img{
-      float: left;
-      width: 150px;
+  header img.robot{
+      width: 130px;
+      left: 30px;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 27px;
+  }
+  
+    h2{
+    margin-left: 0;
+    margin-top: 30px;
+  }
+  h1{
+    margin-left: 150px;
   }
   label{
     display: block;
@@ -243,8 +276,12 @@ input:focus{
   }
 }
 @media screen and (max-width: 330px){
-  header img{
+  header img.robot{
     width: 40%;
+    left: 0;
+  }
+  h1{
+    margin-left: 45%;
   }
   #lesParties{
     padding-left: 0px;
@@ -252,5 +289,28 @@ input:focus{
   }
   #lesParties li{
     margin: 0
+  }
+}
+
+@media screen and (min-width: 1100px){
+  #partieInfos {
+        float: left;
+	margin-left: 20px;
+	width: 30%;
+  }
+  #partieRaphael {
+    float: left;
+  }
+  h2.logged{
+    margin-left: 0;
+    margin-top: 50px;
+  }
+  .infos{
+    float: none;
+  }
+  #identificationP, .joueurs, .infos{
+    width: auto;
+    float: none;
+    margin: 0;
   }
 }
